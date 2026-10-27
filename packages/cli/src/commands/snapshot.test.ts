@@ -99,7 +99,7 @@ describe("tailFrameTime", () => {
   });
 
   it("stays within 250ms of the end of a long composition", () => {
-    // 3% of 634 s is 19 s: the auto end frame used to land at 614.98 s.
+    // 3% of 634 s is 19 s; the cap keeps the end frame 250 ms from the end.
     expect(tailFrameTime(634)).toBeCloseTo(633.75, 5);
     expect(computeSnapshotTimes(634, { frames: 5 }).times.at(-1)).toBeCloseTo(633.75, 5);
   });
