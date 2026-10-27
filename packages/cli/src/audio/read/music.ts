@@ -1,4 +1,9 @@
-import { bandFramesOf, medianInterval, rhythm } from "@hyperframes/core/audio-analysis";
+import {
+  bandFramesOf,
+  medianInterval,
+  rhythm,
+  type AudioSignal,
+} from "@hyperframes/core/audio-analysis";
 import { ABSENT_DB, asSignal, levels, median, mixed, round } from "./signal.js";
 import type { Ambience, Entry, Music, MusicSegment, Piece } from "./types.js";
 
@@ -166,6 +171,17 @@ function bpmOf(beats: readonly number[], run: Run): number | null {
   return interval ? Math.round(60 / interval) : null;
 }
 
+function beatsInRun(signal: AudioSignal, run: Run): number[] {
+  const samples = signal.channels[0]!;
+  if (run.start === 0 && run.end === samples.length / signal.sampleRate)
+    return rhythm(signal).beats.times;
+  const excerpt = samples.subarray(
+    Math.floor(run.start * signal.sampleRate),
+    Math.ceil(run.end * signal.sampleRate),
+  );
+  return rhythm(asSignal(excerpt, signal.sampleRate)).beats.times;
+}
+
 const sameTempo = (a: number | null, b: number | null) =>
   a === null || b === null || Math.abs(a - b) / Math.max(a, b) <= SAME_TEMPO;
 
@@ -275,9 +291,11 @@ export function readMusic(input: MusicInput): {
   const { segments: found, breaks } = runs(db);
   for (const run of found) run.end = Math.min(run.end, duration);
   const frames = bandFramesOf(asSignal(melodic, input.sampleRate));
-  const beats = rhythm(
-    asSignal(input.drums ? mixed([melodic, input.drums]) : melodic, input.sampleRate),
-  ).beats.times;
+  const rhythmic = asSignal(
+    input.drums ? mixed([melodic, input.drums]) : melodic,
+    input.sampleRate,
+  );
+  const beats = rhythm(rhythmic).beats.times;
   const pieces: Known[] = [];
   const segments: MusicSegment[] = [];
   const ambience: Ambience[] = [];
@@ -287,7 +305,7 @@ export function readMusic(input: MusicInput): {
       run,
       print: chromaOf(frames.chroma, frames.chromaFps, run),
       mix: shares(input, run),
-      bpm: bpmOf(beats, run),
+      bpm: bpmOf(beatsInRun(rhythmic, run), { start: 0, end: run.end - run.start }),
       tonality: medianTopThreePitchShare(frames.chroma, frames.chromaFps, run),
     };
     if (!isMusic(heard)) {

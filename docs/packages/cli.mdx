@@ -770,8 +770,8 @@ npx hyperframes audio refs/episode.mp4 --read --range 60,70   # only what overla
   break, returns or is new, and where it fades.
 - **ambience**: stretches of the bed without detected musical evidence, reported
   with their level in dBFS and called quiet under -45 dBFS. The gate counts a
-  detected beat, concentrated pitch-class energy, or multiple leading stems as
-  evidence of music. This is a signal heuristic, not a guarantee: tonal or
+  beat detected within that stretch, concentrated pitch-class energy, or multiple
+  leading stems as evidence of music. This is a signal heuristic, not a guarantee: tonal or
   rhythmic noise can count as music, and music with weak evidence can count as
   ambience. Breaks are reported only between adjacent music stretches.
 

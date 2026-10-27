@@ -127,6 +127,53 @@ describe("readMusic", () => {
     expect(ambience[0]!.db).toBeLessThan(-10);
   });
 
+  it.each(["bed", "drums", "lead-in"])(
+    "does not borrow beat evidence from other stretches (%s)",
+    (placement) => {
+      const parts: [number, number, (t: number) => number][] =
+        placement === "lead-in"
+          ? [[41, 60, C_MAJOR]]
+          : [
+              [0, 20, C_MAJOR],
+              [41, 60, C_MAJOR],
+            ];
+      const pitched = piano(
+        60,
+        parts.map(([start, end, sound]) => [
+          start,
+          end,
+          (t) => sound(t) + (placement === "bed" ? kick(t) : 0),
+        ]),
+      );
+      const drums =
+        placement === "bed"
+          ? null
+          : piano(
+              60,
+              parts.map(([start, end]) => [start, end, kick]),
+            );
+      const noisy = rumble(60, 21);
+      noisy.fill(0, 40 * READ_RATE);
+      const { music, ambience } = readMusic({
+        stems: { piano: pitched, other: noisy },
+        drums,
+        sampleRate: READ_RATE,
+      });
+      expect(ambience.map((span) => [Math.round(span.start), Math.round(span.end)])).toEqual([
+        [21, 40],
+      ]);
+      expect(music.segments.map((span) => [Math.round(span.start), Math.round(span.end)])).toEqual(
+        placement === "lead-in"
+          ? [[41, 60]]
+          : [
+              [0, 20],
+              [41, 60],
+            ],
+      );
+      expect(music.breaks).toEqual([]);
+    },
+  );
+
   it("does not describe a resumption after intervening ambience as a break", () => {
     const stem = piano(26, [
       [0, 8, C_MAJOR],
