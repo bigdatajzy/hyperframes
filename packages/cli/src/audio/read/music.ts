@@ -236,14 +236,28 @@ function liesBetweenMusic(found: Run[], gap: Run, musical: Set<Run>): boolean {
   return after > 0 && musical.has(found[after - 1]!) && musical.has(found[after]!);
 }
 
-function energyCurve(melodic: Float32Array, sampleRate: number, duration: number) {
+function energyCurve(
+  melodic: Float32Array,
+  sampleRate: number,
+  duration: number,
+  musical: Set<Run>,
+) {
   const energy = [];
   for (let start = 0; start < duration; start += ENERGY_WINDOW) {
     const end = Math.min(duration, start + ENERGY_WINDOW);
-    const power = energyOf(melodic, sampleRate, { start, end });
+    const overlaps = [...musical]
+      .map((run) => ({ start: Math.max(start, run.start), end: Math.min(end, run.end) }))
+      .filter((run) => run.end > run.start);
+    if (!overlaps.length) continue;
+    const power =
+      overlaps.reduce(
+        (sum, run) => sum + energyOf(melodic, sampleRate, run) * (run.end - run.start),
+        0,
+      ) /
+      (end - start);
     energy.push({
       start,
-      end: round(end),
+      end: Math.min(round(end), round(duration, 3)),
       db: power > 0 ? Math.round(10 * Math.log10(power)) : -120,
     });
   }
@@ -257,7 +271,9 @@ export function readMusic(input: MusicInput): {
 } {
   const melodic = mixed(Object.values(input.stems));
   const db = levels(melodic, input.sampleRate, HOP, LEVEL_WINDOW);
+  const duration = melodic.length / input.sampleRate;
   const { segments: found, breaks } = runs(db);
+  for (const run of found) run.end = Math.min(run.end, duration);
   const frames = bandFramesOf(asSignal(melodic, input.sampleRate));
   const beats = rhythm(
     asSignal(input.drums ? mixed([melodic, input.drums]) : melodic, input.sampleRate),
@@ -277,8 +293,8 @@ export function readMusic(input: MusicInput): {
     if (!isMusic(heard)) {
       ambience.push({
         start: round(run.start),
-        end: round(run.end),
-        db: Math.round(powerDb(db, run.start, run.end)),
+        end: Math.min(round(run.end), round(duration, 3)),
+        db: Math.round(10 * Math.log10(Math.max(1e-12, energyOf(melodic, input.sampleRate, run)))),
       });
       continue;
     }
@@ -294,7 +310,7 @@ export function readMusic(input: MusicInput): {
     }
     segments.push({
       start: round(run.start),
-      end: round(run.end),
+      end: Math.min(round(run.end), round(duration, 3)),
       piece: piece.id,
       entry,
       bpm: heard.bpm,
@@ -308,7 +324,7 @@ export function readMusic(input: MusicInput): {
       breaks: breaks
         .filter((b) => liesBetweenMusic(found, b, musical))
         .map((b) => ({ start: round(b.start), end: round(b.end) })),
-      energy: energyCurve(melodic, input.sampleRate, db.length * HOP),
+      energy: energyCurve(melodic, input.sampleRate, duration, musical),
     },
     ambience,
     beats,

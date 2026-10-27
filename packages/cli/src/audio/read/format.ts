@@ -69,8 +69,8 @@ function effectLine(effect: Effect, pauses: readonly Span[], musicRead: boolean)
 
 const ENTRY: Record<Entry, string> = {
   start: "",
-  new: ", first appearance after a break",
-  resumes: ", resumes after a break",
+  new: ", first appearance",
+  resumes: ", resumes",
   returns: ", returns",
 };
 
@@ -79,12 +79,17 @@ function musicLine(segment: MusicSegment, analysis: ReadAudio): Line {
   const about = [piece.instruments.join(", "), segment.bpm ? `${segment.bpm} BPM` : null]
     .filter(Boolean)
     .join(" · ");
+  const afterBreak =
+    (segment.entry === "new" || segment.entry === "resumes") &&
+    analysis.music!.breaks.some((gap) => gap.end === segment.start)
+      ? " after a break"
+      : "";
   const fade = segment.fadeFrom !== null ? `, fades from ${s(segment.fadeFrom)}` : "";
   return {
     start: segment.start,
     end: segment.end,
     kind: "music",
-    text: `piece ${piece.id}${about ? ` (${about})` : ""}${ENTRY[segment.entry]}${fade}`,
+    text: `piece ${piece.id}${about ? ` (${about})` : ""}${ENTRY[segment.entry]}${afterBreak}${fade}`,
   };
 }
 

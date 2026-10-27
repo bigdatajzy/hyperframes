@@ -10,7 +10,10 @@ export const ABSENT_DB = -55;
 export async function decodeMono(path: string, sampleRate = READ_RATE): Promise<Float32Array> {
   const decoded = await decodeAudio(path, {}, undefined, { sampleRate, mono: true });
   if (!decoded) throw new Error(`${path} has no audio stream`);
-  return decoded.signal.channels[0]!;
+  const samples = decoded.signal.channels[0]!;
+  if (samples.some((sample) => !Number.isFinite(sample)))
+    throw new Error(`${path} contains non-finite audio samples`);
+  return samples;
 }
 
 export const asSignal = (samples: Float32Array, sampleRate = READ_RATE): AudioSignal => ({

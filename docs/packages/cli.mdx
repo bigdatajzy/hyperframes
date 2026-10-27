@@ -768,9 +768,12 @@ npx hyperframes audio refs/episode.mp4 --read --range 60,70   # only what overla
 - **music**: the bed split at its cut-outs, each part naming its piece, the
   instruments that carry it and its tempo, whether it starts, resumes after a
   break, returns or is new, and where it fades.
-- **ambience**: parts of the bed with nothing musical in them — no beat, no clear
-  key and at most one instrument, such as room tone, wind or engine noise — with
-  their level in dBFS, called quiet under -45 dBFS. They are not music.
+- **ambience**: stretches of the bed without detected musical evidence, reported
+  with their level in dBFS and called quiet under -45 dBFS. The gate counts a
+  detected beat, concentrated pitch-class energy, or multiple leading stems as
+  evidence of music. This is a signal heuristic, not a guarantee: tonal or
+  rhythmic noise can count as music, and music with weak evidence can count as
+  ambience. Breaks are reported only between adjacent music stretches.
 
 Sentences come from a transcript: `--transcript <file>`, or
 `<recording>.transcript.json` beside the recording. Without one, voice lines
@@ -793,6 +796,15 @@ not tell speech from music. Each case says so in a warning.
 The result is computed once per file content and kept in `.hyperframes/read-audio`
 under the project, with the stems; the text output ends with the path of the
 whole recording's text, and `--json` returns the analysis.
+
+Read schema version 3 changes `analysis.stems` from names to `{ name, db }[]`,
+ordered loudest first. Only stems with frames at or above -55 dBFS are listed;
+`db` is the rounded power-average level of those frames, not an average of dB
+values or the level across silent gaps. `analysis.ambience` contains
+`{ start, end, db }` stretches, or `null` when stems were not read. Music energy
+and effect levels over music exclude stretches classified as ambience. Version 2
+cached analyses are recomputed using existing cached stems; JSON consumers must
+use `stem.name` instead of treating each stem as a string.
 
 Every measurement comes from a provider ladder, tried in this order until one
 answers:

@@ -118,6 +118,7 @@ async function fromStems(path: string, stemPaths: Record<string, string>, voice:
     source: drums ?? bed ?? new Float32Array(0),
     sampleRate: READ_RATE,
     music: bed,
+    musicSegments: music?.segments ?? [],
     heard: await decodeMono(path),
     beats,
     speech: [],

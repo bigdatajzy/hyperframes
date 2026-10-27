@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { formatRead } from "./format.js";
+import { READ_VERSION } from "./types.js";
 import { readMusic } from "./music.js";
 import { READ_RATE } from "./signal.js";
 
@@ -32,6 +34,39 @@ const kick = (t: number) => {
 };
 
 describe("readMusic", () => {
+  it.each([0, 0.01, 0.37, 1.03])("keeps silent %s s clips finite and empty", (seconds) => {
+    const result = readMusic({
+      stems: { other: new Float32Array(Math.round(seconds * READ_RATE)) },
+      drums: null,
+      sampleRate: READ_RATE,
+    });
+    expect(result.music.segments).toEqual([]);
+    expect(result.music.breaks).toEqual([]);
+    expect(result.ambience).toEqual([]);
+    expect(result.music.energy).toEqual([]);
+  });
+
+  it("bounds short ambience and music to the actual recording", () => {
+    for (const samples of [
+      rumble(0.01),
+      rumble(0.037),
+      rumble(0.37),
+      piano(1.036, [[0, 1.036, C_MAJOR]]),
+    ]) {
+      const { music, ambience } = readMusic({
+        stems: { other: samples },
+        drums: null,
+        sampleRate: READ_RATE,
+      });
+      const spans = [...music.segments, ...ambience, ...music.energy];
+      expect(spans.length).toBeGreaterThan(0);
+      for (const span of [...ambience, ...music.energy])
+        expect(Number.isFinite(span.db)).toBe(true);
+      for (const span of spans)
+        expect(span.end).toBeLessThanOrEqual(samples.length / READ_RATE + 0.0005);
+    }
+  });
+
   it("splits the bed at its cut-outs and tells a new piece from one that returns", () => {
     const stem = piano(26, [
       [0, 8, C_MAJOR],
@@ -90,6 +125,40 @@ describe("readMusic", () => {
     expect(ambience).toEqual([{ start: 0, end: expect.closeTo(10, 0), db: expect.any(Number) }]);
     expect(ambience[0]!.db).toBeGreaterThan(-40);
     expect(ambience[0]!.db).toBeLessThan(-10);
+  });
+
+  it("does not describe a resumption after intervening ambience as a break", () => {
+    const stem = piano(26, [
+      [0, 8, C_MAJOR],
+      [18, 26, C_MAJOR],
+    ]);
+    const noisy = rumble(26, 9);
+    noisy.fill(0, 17 * READ_RATE);
+    const { music, ambience } = readMusic({
+      stems: { piano: stem, other: noisy },
+      drums: null,
+      sampleRate: READ_RATE,
+    });
+    expect(music.segments).toHaveLength(2);
+    expect(music.segments[1]!.entry).toBe("resumes");
+    expect(ambience).toHaveLength(1);
+    expect(music.breaks).toEqual([]);
+    const text = formatRead({
+      version: READ_VERSION,
+      file: "bed.wav",
+      sha256: "test",
+      duration: 26,
+      separation: "stems",
+      stems: [],
+      transcript: null,
+      voice: null,
+      effects: null,
+      music,
+      ambience,
+      warnings: [],
+    });
+    expect(text).toContain("resumes");
+    expect(text).not.toContain("after a break");
   });
 
   it("does not call the gap between music and ambience a break", () => {
