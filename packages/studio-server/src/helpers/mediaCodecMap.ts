@@ -1,7 +1,9 @@
 import { scanHtmlOpeningTags, decodeAuthoredAttribute } from "@hyperframes/parsers";
 import { statSync } from "node:fs";
 import { realpath } from "./safePath.js";
-import { sep } from "node:path";
+import { basename, sep } from "node:path";
+import { findFfBinary } from "@hyperframes/parsers/ff-binaries";
+import { ffmpegHasHdrFilters } from "./hdrFilters.js";
 import { rewriteAssetPath } from "@hyperframes/parsers/asset-paths";
 import {
   cleanAssetUrl,
@@ -203,11 +205,12 @@ function codecFactsFor(
   codecName: string,
   hasAlpha: boolean,
   source?: PreviewSourceFacts,
+  toneMapsToSdr = false,
 ): AssetCodecFacts {
   const hostile = hostileCodecEntry(codecName);
   return {
     codecName,
-    browserHostile: hostile !== undefined,
+    browserHostile: hostile !== undefined || toneMapsToSdr,
     representativeMime: hostile?.representativeMime ?? null,
     hasAlpha,
     ...(source && { source }),
@@ -226,7 +229,25 @@ async function probeCodecFacts(
   if (metadata.kind !== "video") return null;
   const codecName = metadata.color.codecName;
   if (!codecName) return null;
-  return codecFactsFor(codecName, metadata.hasAlpha === true, metadata.source);
+  const hasAlpha = metadata.hasAlpha === true;
+  const toneMaps = !hasAlpha && (await toneMapsHdr(filePath, metadata.color.hdrTransfer));
+  return codecFactsFor(codecName, hasAlpha, metadata.source, toneMaps);
+}
+
+let warnedNoHdrFilters = false;
+
+/** An HDR video previews through the same tone-mapped copy the SDR export uses, so the two match. */
+async function toneMapsHdr(filePath: string, hdrTransfer: string | null): Promise<boolean> {
+  if (hdrTransfer !== "pq" && hdrTransfer !== "hlg") return false;
+  const ffmpegPath = findFfBinary("ffmpeg");
+  if (ffmpegPath && (await ffmpegHasHdrFilters(ffmpegPath))) return true;
+  if (!warnedNoHdrFilters) {
+    warnedNoHdrFilters = true;
+    console.warn(
+      `[hyperframes] ${basename(filePath)} is HDR, but this ffmpeg has no zscale/tonemap (libzimg), so the preview plays it as the browser shows it and will not match an SDR export. Install an ffmpeg with libzimg.`,
+    );
+  }
+  return false;
 }
 
 interface CachedAssetProbe {
