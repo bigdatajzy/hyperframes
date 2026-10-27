@@ -570,11 +570,19 @@ export function parseZoomScale(value: unknown): number {
  * treats t >= clip-end as past-end and unmounts the clip (verified on a V4 3D
  * artifact: t=8.0 of an 8s clip was pure white, t=7.76 showed the final hero).
  * So the "final frame" must be sampled just-before-end. The blank tail observed
- * spanned the last ~2.5% of the timeline, hence a 3%-of-duration nudge (floored
- * at 50ms so very short clips still back off a readable amount).
+ * spanned the last ~2.5% of the timeline, hence a 3%-of-duration nudge, floored
+ * at 50ms so very short clips still back off a readable amount and capped at 250ms
+ * so a long composition's tail frame stays in its last moment (3% of 634 s is 19 s).
  */
+const TAIL_BACKOFF_MIN_SECONDS = 0.05;
+const TAIL_BACKOFF_MAX_SECONDS = 0.25;
+
 export function tailFrameTime(duration: number): number {
-  return Math.max(0, duration - Math.max(0.05, duration * 0.03));
+  const backoff = Math.min(
+    TAIL_BACKOFF_MAX_SECONDS,
+    Math.max(TAIL_BACKOFF_MIN_SECONDS, duration * 0.03),
+  );
+  return Math.max(0, duration - backoff);
 }
 
 /**
