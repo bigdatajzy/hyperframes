@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { withRootImportMap } from "./rootImportMap.js";
 
@@ -44,5 +46,17 @@ describe("withRootImportMap", () => {
       BASE,
     );
     expect(maps(inTemplate)).toEqual([{ imports: { "/": BASE, [BASE]: BASE } }, { imports: {} }]);
+  });
+
+  it("has no dynamic import in the preview runtime, which the map would send under the project", () => {
+    const runtime = resolve(import.meta.dirname, "../../../core/src/runtime");
+    const sources = readdirSync(runtime, { recursive: true, encoding: "utf8" }).filter(
+      (file) => file.endsWith(".ts") && !file.endsWith(".test.ts"),
+    );
+    expect(sources.length).toBeGreaterThan(20);
+    const importing = sources.filter((file) =>
+      /(?<!typeof )\bimport\s*\(/.test(readFileSync(join(runtime, file), "utf8")),
+    );
+    expect(importing).toEqual([]);
   });
 });

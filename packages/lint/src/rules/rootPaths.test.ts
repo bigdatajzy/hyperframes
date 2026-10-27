@@ -62,4 +62,15 @@ describe("root paths the preview cannot find", () => {
       ),
     ).toEqual([]);
   });
+
+  it("warns on an import map the browser would ignore, and not on a valid one", async () => {
+    const codes = async (map: string) =>
+      (await lintHyperframeHtml(page(`<script type="importmap">${map}</script>`))).findings
+        .map((finding) => finding.code)
+        .filter((code) => code === "import_map_invalid");
+    expect(await codes(`{"imports": {"three": "./vendor/three.js",}}`)).toEqual([
+      "import_map_invalid",
+    ]);
+    expect(await codes(`{"imports": {"three": "./vendor/three.js"}}`)).toEqual([]);
+  });
 });

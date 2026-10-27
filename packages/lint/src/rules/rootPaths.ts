@@ -50,10 +50,30 @@ const scriptRootPaths = (script: string): HyperframeLintFinding[] =>
     rootPathFinding(match[2] ?? "", undefined, match[0]),
   );
 
+function invalidImportMap(script: { attrs: string; content: string }): HyperframeLintFinding[] {
+  if (!/\btype\s*=\s*["']?importmap\b/i.test(script.attrs)) return [];
+  try {
+    JSON.parse(script.content);
+    return [];
+  } catch (error) {
+    return [
+      {
+        code: "import_map_invalid",
+        severity: "warning",
+        message: `This import map is not valid JSON (${error instanceof Error ? error.message : String(error)}). The browser ignores it, and preview cannot map root module paths ("/assets/x.js") to the project.`,
+        fixHint:
+          "Make the import map valid JSON: double-quoted keys and values, no trailing commas.",
+        snippet: truncateSnippet(script.content),
+      },
+    ];
+  }
+}
+
 export const rootPathRules: Array<(ctx: LintContext) => HyperframeLintFinding[]> = [
   (ctx) => [
     ...ctx.tags.flatMap(tagRootPaths),
     ...ctx.styles.flatMap((style) => cssRootPaths(style.content, style.rootRelativePath)),
     ...ctx.scripts.flatMap((script) => scriptRootPaths(script.content)),
+    ...ctx.scripts.flatMap(invalidImportMap),
   ],
 ];
