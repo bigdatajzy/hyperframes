@@ -48,8 +48,7 @@ export function levels(
   return out;
 }
 
-/** Level in dBFS of the frames where a track is heard at all, or null when it never is. */
-export function heardLevel(samples: Float32Array, sampleRate: number): number | null {
+export function levelWhileHeardDb(samples: Float32Array, sampleRate: number): number | null {
   let sum = 0;
   let heard = 0;
   for (const db of levels(samples, sampleRate, 0.1, 0.4))

@@ -14,9 +14,9 @@ import { findEffects } from "./effects.js";
 import { formatRead } from "./format.js";
 import { readMusic } from "./music.js";
 import { pitchTrack } from "./pitch.js";
-import { PITCH_RATE, READ_RATE, decodeMono, heardLevel, mixed, round } from "./signal.js";
+import { PITCH_RATE, READ_RATE, decodeMono, levelWhileHeardDb, mixed, round } from "./signal.js";
 import { DRUM_STEM, VOICE_STEM, cachedStems, fetchStems, stemsAccess } from "./stems.js";
-import { READ_VERSION, type ReadAudio, type Stem } from "./types.js";
+import { READ_VERSION, type ReadAudio, type AudibleStem } from "./types.js";
 import { voiceFromActivity, voiceFromWords, type TimedWord } from "./voice.js";
 
 export interface ReadOptions {
@@ -92,10 +92,10 @@ async function stemsFor(
   }
 }
 
-function heardStems(tracks: Record<string, Float32Array>): Stem[] {
+function heardStems(tracks: Record<string, Float32Array>): AudibleStem[] {
   return Object.entries(tracks)
-    .map(([name, samples]) => ({ name, db: heardLevel(samples, READ_RATE) }))
-    .filter((stem): stem is Stem => stem.db !== null)
+    .map(([name, samples]) => ({ name, db: levelWhileHeardDb(samples, READ_RATE) }))
+    .filter((stem): stem is AudibleStem => stem.db !== null)
     .sort((a, b) => b.db - a.db || a.name.localeCompare(b.name));
 }
 

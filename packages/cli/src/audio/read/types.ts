@@ -88,17 +88,14 @@ export interface Music {
   energy: { start: number; end: number; db: number }[];
 }
 
-/** A stretch of the non-voice, non-drum stems with no beat, no clear key and at most one instrument: room tone, engine noise, wind. */
 export interface Ambience {
   start: number;
   end: number;
-  /** Its level in dBFS. */
   db: number;
 }
 
-export interface Stem {
+export interface AudibleStem {
   name: string;
-  /** Its level in dBFS where it is heard. */
   db: number;
 }
 
@@ -108,8 +105,7 @@ export interface ReadAudio {
   sha256: string;
   duration: number;
   separation: Separation;
-  /** The separated stems that carry sound, loudest first. */
-  stems: Stem[];
+  stems: AudibleStem[];
   transcript: string | null;
   /** Null when the mix alone cannot tell speech from music: no stems and no transcript. */
   voice: Voice | null;

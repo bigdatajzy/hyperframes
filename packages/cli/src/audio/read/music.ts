@@ -126,8 +126,7 @@ function chromaOf(chroma: Float64Array[], fps: number, run: Run): Float64Array {
   return norm ? sum.map((v) => v / norm) : sum;
 }
 
-/** How much of each chroma frame its three strongest pitch classes hold, at the run's median frame; noise holds about 0.3. */
-function tonality(chroma: Float64Array[], fps: number, run: Run): number {
+function medianTopThreePitchShare(chroma: Float64Array[], fps: number, run: Run): number {
   const a = Math.floor(run.start * fps);
   const b = Math.min(chroma.length, Math.ceil(run.end * fps));
   const held: number[] = [];
@@ -232,8 +231,7 @@ function newPiece(id: number, heard: Heard): Known {
   };
 }
 
-/** A break is the music cutting out, so it lies between two runs of music. */
-function between(found: Run[], gap: Run, musical: Set<Run>): boolean {
+function liesBetweenMusic(found: Run[], gap: Run, musical: Set<Run>): boolean {
   const after = found.findIndex((run) => run.start >= gap.end);
   return after > 0 && musical.has(found[after - 1]!) && musical.has(found[after]!);
 }
@@ -252,7 +250,6 @@ function energyCurve(melodic: Float32Array, sampleRate: number, duration: number
   return energy;
 }
 
-/** The bed's music, and the stretches of it that are only ambience because nothing in them is musical. */
 export function readMusic(input: MusicInput): {
   music: Music;
   ambience: Ambience[];
@@ -275,7 +272,7 @@ export function readMusic(input: MusicInput): {
       print: chromaOf(frames.chroma, frames.chromaFps, run),
       mix: shares(input, run),
       bpm: bpmOf(beats, run),
-      tonality: tonality(frames.chroma, frames.chromaFps, run),
+      tonality: medianTopThreePitchShare(frames.chroma, frames.chromaFps, run),
     };
     if (!isMusic(heard)) {
       ambience.push({
@@ -309,7 +306,7 @@ export function readMusic(input: MusicInput): {
       segments,
       pieces: pieces.map(({ print: _print, mix: _mix, ...piece }) => piece),
       breaks: breaks
-        .filter((b) => between(found, b, musical))
+        .filter((b) => liesBetweenMusic(found, b, musical))
         .map((b) => ({ start: round(b.start), end: round(b.end) })),
       energy: energyCurve(melodic, input.sampleRate, db.length * HOP),
     },
