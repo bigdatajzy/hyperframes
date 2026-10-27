@@ -5,6 +5,7 @@ import { parseGsapScript } from "../../../../parsers/src/gsapParser.ts";
 import { readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { COMPOSITION, FIXTURE_CDN, PLAYHEAD, localAsset } from "./grid.mjs";
+import { traceBench } from "./trace.mjs";
 import {
   angleOf,
   centre,
@@ -886,9 +887,11 @@ export async function pointerGesture(ctx, gesture, pre, route) {
   await ctx.page.mouse.move(press[0], press[1]);
   await startFrames(ctx.page, ctx.selector ?? "#target");
   await nextFrame(ctx.page, 2);
+  traceBench("press", { gesture });
   await ctx.page.mouse.down();
   await nextFrame(ctx.page);
   const s0 = await sample(ctx, gesture, g.point, press);
+  traceBench("pressed", { gesture, jump: pre && quadDistance(s0.m.visible, pre.visible) });
   await recording(ctx.page, true);
   const errors = [];
   let last = s0;
@@ -908,6 +911,7 @@ export async function pointerGesture(ctx, gesture, pre, route) {
   }
   const rec = await recording(ctx.page, false);
   const smooth = smoothness(rec);
+  traceBench("release", { gesture, worst: Math.max(...errors) });
   await ctx.page.mouse.up();
   const lastQuad = gesture === "crop" ? last.m.outline : last.m.visible;
   return {
