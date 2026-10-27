@@ -594,6 +594,14 @@ describe("HDR video previews through the SDR tone-mapped copy", () => {
     expect(decideMediaProxyEligibility(facts)).toEqual({ eligible: true });
   });
 
+  it("treats an HDR clip as not playable whatever its codec, so a browser that decodes HEVC still swaps it", async () => {
+    const facts = await probe({ ...hlgClip, codecName: "hevc" }, true);
+    expect(facts?.browserHostile).toBe(true);
+    expect(facts?.representativeMime).toBeNull();
+    const vp9 = await probe({ ...hlgClip, codecName: "vp9" }, true);
+    expect(vp9?.representativeMime).toBeNull();
+  });
+
   it("leaves an SDR H.264 clip native", async () => {
     const facts = await probe({ codecName: "h264", pixFmt: "yuv420p" }, true);
     expect(facts?.browserHostile).toBe(false);

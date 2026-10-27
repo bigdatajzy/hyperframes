@@ -465,11 +465,11 @@ function warnColourUnknownOnce(): void {
 
 let warnedNoHdrFilters = false;
 
-function warnNoHdrFiltersOnce(videoPath: string): void {
+function warnNoHdrFiltersOnce(): void {
   if (warnedNoHdrFilters) return;
   warnedNoHdrFilters = true;
   console.warn(
-    `   ${c.warn("⚠")} ${basename(videoPath)} is HDR, but this ffmpeg has no zscale/tonemap (libzimg), so the still shows it as the browser does and will not match an SDR export. Install an ffmpeg with libzimg.`,
+    `   ${c.warn("⚠")} A video in this project is HDR, but this ffmpeg has no zscale/tonemap (libzimg), so the still shows it as the browser does and will not match an SDR export. Install an ffmpeg with libzimg.`,
   );
 }
 
@@ -533,7 +533,7 @@ export async function extractVideoFrameToBuffer(
     };
     let result = await runFfmpegOnce(ffmpegPath, frameArgs(toneMap), FFMPEG_EXTRACT_TIMEOUT_MS);
     if (toneMap && result.code !== 0 && /no such filter/i.test(result.stderr)) {
-      warnNoHdrFiltersOnce(videoPath);
+      warnNoHdrFiltersOnce();
       result = await runFfmpegOnce(ffmpegPath, frameArgs(null), FFMPEG_EXTRACT_TIMEOUT_MS);
     }
     if (result.timedOut) {
