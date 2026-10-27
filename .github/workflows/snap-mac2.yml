@@ -1,0 +1,85 @@
+name: snap-mac2
+on: push
+jobs:
+  r:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gpu: ["auto", "software"]
+    steps:
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: { node-version: 22 }
+      - run: brew install ffmpeg && pip3 install --break-system-packages pillow
+      - name: project
+        run: |
+          mkdir -p with && cd with
+          ffmpeg -v error -f lavfi -i testsrc2=size=320x180:rate=30 -t 3 -pix_fmt yuv420p -an v.mp4
+          cat > index.html <<'H'
+          <!doctype html>
+          <html><head><meta charset="UTF-8" />
+          <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+          <style>body{margin:0;width:640px;height:360px;overflow:hidden;background:#000}</style></head>
+          <body>
+          <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="640" data-height="360">
+            <div id="h1" data-composition-id="s1" data-composition-src="s1.html" data-start="0" data-duration="5" data-track-index="1" style="position:absolute;inset:0"></div>
+            <div id="h2" data-composition-id="s2" data-composition-src="s2.html" data-start="5" data-duration="5" data-track-index="2" style="position:absolute;inset:0"></div>
+          </div>
+          <script>window.__timelines = window.__timelines || {}; window.__timelines["main"] = gsap.timeline({ paused: true });</script>
+          </body></html>
+          H
+          cat > s1.html <<'H'
+          <template id="s1-template"><div id="s1" data-composition-id="s1" data-width="640" data-height="360" style="position:absolute;inset:0">
+            <div id="a" style="position:absolute;inset:0;background:#ff0000"></div>
+            <div id="b" style="position:absolute;inset:0;background:#00ff00;visibility:hidden"></div>
+            <div id="c" style="position:absolute;inset:0;background:#0000ff;opacity:0"></div>
+            <script>
+              window.__timelines = window.__timelines || {};
+              var tl = gsap.timeline({ paused: true });
+              tl.set("#a", { visibility: "hidden" }, 2).set("#b", { visibility: "visible" }, 2);
+              tl.set("#b", { visibility: "hidden" }, 3).set("#c", { opacity: 1 }, 3);
+              tl.to({}, { duration: 5 }, 0);
+              window.__timelines["s1"] = tl;
+            </script></div></template>
+          H
+          cat > s2.html <<'H'
+          <template id="s2-template"><div id="s2" data-composition-id="s2" data-width="640" data-height="360" style="position:absolute;inset:0;background:#ffff00">
+            <video class="clip" id="vid" src="v.mp4" muted playsinline data-start="0" data-duration="3" data-track-index="0" style="position:absolute;inset:0;width:640px;height:360px"></video>
+            <script>window.__timelines = window.__timelines || {}; var t = gsap.timeline({ paused: true }); t.to({}, { duration: 5 }, 0); window.__timelines["s2"] = t;</script></div></template>
+          H
+          cd ..
+          cat > check.py <<'PY'
+          import glob
+          from PIL import Image
+          names = {"ff0000":"red","00ff00":"green","0000ff":"blue","ffff00":"yellow"}
+          files = sorted(glob.glob(".hyperframes/artifacts/snapshots/*/frame-*.png"))[:4]
+          got = []
+          for f in files:
+              im = Image.open(f).convert("RGB"); px = im.getpixel((im.width//2, im.height//2))
+              got.append(names[min(names, key=lambda k: sum(abs(a-int(k[i*2:i*2+2],16)) for i,a in enumerate(px)))])
+          print("RESULT", " ".join(got), "OK" if got == ["red","green","blue","blue"] else "WRONG")
+          PY
+      - name: runs
+        working-directory: with
+        run: |
+          flag=""; [ "${{ matrix.gpu }}" = software ] && flag="--no-browser-gpu"
+          run() {
+            for i in 1 2 3; do
+              rm -rf .hyperframes
+              npx -y hyperframes@0.8.206 snapshot $flag --at 0.5,2.05,3.05,4.5 > snap.log 2>&1 &
+              pid=$!
+              for s in $(seq 150); do kill -0 $pid 2>/dev/null || break; sleep 1; done
+              if kill -0 $pid 2>/dev/null; then
+                echo "$1 run $i HANG after 150 s"
+                ps -axo pid,ppid,etime,%cpu,command | grep -iE "chrome|hyperframes|ffmpeg|node" | grep -v grep | cut -c1-200 | head -20
+                echo "--- snap.log tail"; tail -15 snap.log
+                kill $pid 2>/dev/null; kill $(pgrep -P $pid) 2>/dev/null
+              else
+                wait $pid; echo "$1 run $i exit $?"; python3 ../check.py
+              fi
+            done
+          }
+          run idle
+          for n in 1 2 3 4 5 6; do (ffmpeg -hide_banner -loglevel error -f lavfi -i testsrc2=size=1920x1080:rate=30 -t 500 -c:v libx264 -preset slow -f null - > /dev/null 2>&1 &) ; done
+          sleep 3
+          run loaded
