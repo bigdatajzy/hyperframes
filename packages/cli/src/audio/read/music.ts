@@ -1,9 +1,8 @@
 import { bandFramesOf, medianInterval, rhythm } from "@hyperframes/core/audio-analysis";
-import { asSignal, levels, median, mixed, round } from "./signal.js";
-import type { Entry, Music, MusicSegment, Piece } from "./types.js";
+import { ABSENT_DB, asSignal, levels, median, mixed, round } from "./signal.js";
+import type { Ambience, Entry, Music, MusicSegment, Piece } from "./types.js";
 
 const HOP = 0.1;
-const ABSENT_DB = -55;
 const CUT_DB = 25;
 const RUNNING_FRAMES = 200;
 const LEVEL_WINDOW = 0.4;
@@ -21,6 +20,7 @@ const FADE_DB = 10;
 const FADE_WINDOW = 3;
 const ENERGY_WINDOW = 30;
 const LEADING_SHARE = 0.2;
+const TONAL_SHARE = 0.4;
 
 export interface MusicInput {
   /** Every pitched stem, by name: bass, guitar, piano, other. */
@@ -126,6 +126,19 @@ function chromaOf(chroma: Float64Array[], fps: number, run: Run): Float64Array {
   return norm ? sum.map((v) => v / norm) : sum;
 }
 
+/** How much of each chroma frame its three strongest pitch classes hold, at the run's median frame; noise holds about 0.3. */
+function tonality(chroma: Float64Array[], fps: number, run: Run): number {
+  const a = Math.floor(run.start * fps);
+  const b = Math.min(chroma.length, Math.ceil(run.end * fps));
+  const held: number[] = [];
+  for (let f = a; f < b; f++) {
+    const sorted = [...chroma[f]!].sort((x, y) => y - x);
+    const total = sorted.reduce((n, v) => n + v, 0);
+    if (total > 0) held.push((sorted[0]! + sorted[1]! + sorted[2]!) / total);
+  }
+  return median(held);
+}
+
 const dot = (a: Float64Array, b: Float64Array) => a.reduce((n, v, k) => n + v * b[k]!, 0);
 
 function energyOf(samples: Float32Array, sampleRate: number, run: Run): number {
@@ -175,7 +188,17 @@ interface Heard {
   print: Float64Array;
   mix: Record<string, number>;
   bpm: number | null;
+  tonality: number;
 }
+
+const leading = (mix: Record<string, number>) =>
+  Object.entries(mix)
+    .filter(([, share]) => share >= LEADING_SHARE)
+    .sort((a, b) => b[1] - a[1])
+    .map(([name]) => name);
+
+const isMusic = (heard: Heard) =>
+  heard.bpm !== null || heard.tonality >= TONAL_SHARE || leading(heard.mix).length > 1;
 
 const alike = (p: Known, heard: Heard, piece: number, mix: number) =>
   dot(p.print, heard.print) >= piece &&
@@ -201,15 +224,18 @@ function pieceOf(
 function newPiece(id: number, heard: Heard): Known {
   return {
     id,
-    instruments: Object.entries(heard.mix)
-      .filter(([, share]) => share >= LEADING_SHARE)
-      .sort((a, b) => b[1] - a[1])
-      .map(([name]) => name),
+    instruments: leading(heard.mix),
     bpm: heard.bpm,
     firstAt: round(heard.run.start),
     print: heard.print,
     mix: heard.mix,
   };
+}
+
+/** A break is the music cutting out, so it lies between two runs of music. */
+function between(found: Run[], gap: Run, musical: Set<Run>): boolean {
+  const after = found.findIndex((run) => run.start >= gap.end);
+  return after > 0 && musical.has(found[after - 1]!) && musical.has(found[after]!);
 }
 
 function energyCurve(melodic: Float32Array, sampleRate: number, duration: number) {
@@ -226,7 +252,12 @@ function energyCurve(melodic: Float32Array, sampleRate: number, duration: number
   return energy;
 }
 
-export function readMusic(input: MusicInput): { music: Music; beats: number[] } {
+/** The bed's music, and the stretches of it that are only ambience because nothing in them is musical. */
+export function readMusic(input: MusicInput): {
+  music: Music;
+  ambience: Ambience[];
+  beats: number[];
+} {
   const melodic = mixed(Object.values(input.stems));
   const db = levels(melodic, input.sampleRate, HOP, LEVEL_WINDOW);
   const { segments: found, breaks } = runs(db);
@@ -236,13 +267,25 @@ export function readMusic(input: MusicInput): { music: Music; beats: number[] } 
   ).beats.times;
   const pieces: Known[] = [];
   const segments: MusicSegment[] = [];
+  const ambience: Ambience[] = [];
+  const musical = new Set<Run>();
   for (const run of found) {
     const heard: Heard = {
       run,
       print: chromaOf(frames.chroma, frames.chromaFps, run),
       mix: shares(input, run),
       bpm: bpmOf(beats, run),
+      tonality: tonality(frames.chroma, frames.chromaFps, run),
     };
+    if (!isMusic(heard)) {
+      ambience.push({
+        start: round(run.start),
+        end: round(run.end),
+        db: Math.round(powerDb(db, run.start, run.end)),
+      });
+      continue;
+    }
+    musical.add(run);
     const previous = segments[segments.length - 1];
     let piece = pieceOf(pieces, previous, heard);
     let entry: Entry;
@@ -265,9 +308,12 @@ export function readMusic(input: MusicInput): { music: Music; beats: number[] } 
     music: {
       segments,
       pieces: pieces.map(({ print: _print, mix: _mix, ...piece }) => piece),
-      breaks: breaks.map((b) => ({ start: round(b.start), end: round(b.end) })),
+      breaks: breaks
+        .filter((b) => between(found, b, musical))
+        .map((b) => ({ start: round(b.start), end: round(b.end) })),
       energy: energyCurve(melodic, input.sampleRate, db.length * HOP),
     },
+    ambience,
     beats,
   };
 }

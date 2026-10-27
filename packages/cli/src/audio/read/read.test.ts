@@ -1,6 +1,7 @@
 import { createServer, type IncomingMessage, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
@@ -149,8 +150,8 @@ describe.skipIf(!ffmpeg)("readAudio", () => {
     expect(first.analysis.voice!.medianPitchHz).toBeGreaterThan(170);
     expect(first.analysis.warnings.join("\n")).toContain("no HeyGen credential");
     const text = readFileSync(first.textPath, "utf8");
-    expect(text).toContain('voice   "一口气了解。"');
-    expect(text).toContain("pause   1.0 s");
+    expect(text).toContain('voice    "一口气了解。"');
+    expect(text).toContain("pause    1.0 s");
     const again = await readAudio(path, "talk.wav", { cacheDir, quality: "best" });
     expect(again.cached).toBe(true);
     writeFileSync(
@@ -182,7 +183,7 @@ describe.skipIf(!ffmpeg)("readAudio", () => {
     expect(stemKeys[1]).toBe(stemKeys[0]);
     expect(analysis).toMatchObject({
       separation: "stems",
-      stems: ["bass", "drums", "guitar", "other", "piano", "vocals"],
+      stems: ["vocals", "drums", "piano"].map((name) => ({ name, db: expect.any(Number) })),
       warnings: [expect.stringContaining("no transcript")],
     });
     expect(analysis.voice!.source).toBe("activity");
@@ -192,10 +193,45 @@ describe.skipIf(!ffmpeg)("readAudio", () => {
     expect(analysis.effects!.events[0]!.overMusicDb).toBeGreaterThan(5);
     expect(analysis.music!.breaks.map((b) => Math.round(b.start))).toEqual([5]);
     expect(analysis.music!.segments.map((s) => s.entry)).toEqual(["start", "resumes"]);
-    expect(readFileSync(textPath, "utf8")).toContain("effect  boom (S1): low");
+    const text = readFileSync(textPath, "utf8");
+    expect(text).toMatch(/stems: vocals -\d+ dB, drums -\d+ dB, piano -\d+ dB\n/);
+    expect(text).toContain("effect   boom (S1): low");
+    expect(analysis.ambience).toEqual([]);
     expect(existsSync(join(cacheDir, "stems"))).toBe(true);
     await readAudio(path, "episode.wav", { cacheDir, quality: "best" });
     expect(stemCalls).toBe(2);
+  });
+
+  it("reads a bed of noise as ambience, not music, and names only the stems that carry sound", async () => {
+    let seed = 7;
+    const noise = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) * 2 - 1;
+    const roomTone = new Float32Array(Math.round(6 * RATE)).map(() => 0.006 * noise());
+    const path = wav("room.wav", 6, (t) => roomTone[Math.round(t * RATE)] ?? 0);
+    const cacheDir = join(dir, "cache-room");
+    const sha = createHash("sha256").update(readFileSync(path)).digest("hex");
+    const stemDir = join(cacheDir, "stems", sha.slice(0, 12));
+    mkdirSync(stemDir, { recursive: true });
+    writeFileSync(join(stemDir, "other.wav"), readFileSync(path));
+    writeFileSync(join(stemDir, "silence.wav"), readFileSync(wav("room-silence.wav", 6, () => 0)));
+    const names = ["vocals", "drums", "bass", "guitar", "piano"];
+    writeFileSync(
+      join(stemDir, "stems.json"),
+      JSON.stringify({
+        other: "other.wav",
+        ...Object.fromEntries(names.map((n) => [n, "silence.wav"])),
+      }),
+    );
+    const { analysis, textPath } = await readAudio(path, "room.wav", { cacheDir, quality: "best" });
+    expect(analysis.stems).toEqual([{ name: "other", db: expect.any(Number) }]);
+    expect(analysis.music!.segments).toEqual([]);
+    expect(analysis.ambience).toEqual([
+      { start: 0, end: expect.closeTo(6, 0), db: expect.any(Number) },
+    ]);
+    expect(analysis.ambience![0]!.db).toBeLessThan(-45);
+    const text = readFileSync(textPath, "utf8");
+    expect(text).toMatch(/stems: other -\d+ dB\n/);
+    expect(text).toMatch(/ambience quiet, -\d+ dBFS/);
+    expect(text).not.toContain("piece");
   });
 
   it("falls back on partial stems and retries instead of caching unmeasured layers as silence", async () => {

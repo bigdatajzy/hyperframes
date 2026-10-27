@@ -768,6 +768,9 @@ npx hyperframes audio refs/episode.mp4 --read --range 60,70   # only what overla
 - **music**: the bed split at its cut-outs, each part naming its piece, the
   instruments that carry it and its tempo, whether it starts, resumes after a
   break, returns or is new, and where it fades.
+- **ambience**: parts of the bed with nothing musical in them — no beat, no clear
+  key and at most one instrument, such as room tone, wind or engine noise — with
+  their level in dBFS, called quiet under -45 dBFS. They are not music.
 
 Sentences come from a transcript: `--transcript <file>`, or
 `<recording>.transcript.json` beside the recording. Without one, voice lines
@@ -781,7 +784,8 @@ same origin's direct-upload endpoints. The separation request waits for the
 stems; an in-progress response or dropped connection retries the same request
 with the same idempotency key (`HYPERFRAMES_AUDIO_STEMS_TIMEOUT_MS`, 30 minutes
 by default). Effects are read
-from the drums stem and the music from the other four. Without stems, effects are
+from the drums stem and the music and ambience from the other four; the header
+lists only the stems that carry sound, with their level. Without stems, effects are
 read from the mix outside speech and the music is not read; with neither stems nor
 a transcript, voice and effects are not read either, because the mix alone does
 not tell speech from music. Each case says so in a warning.

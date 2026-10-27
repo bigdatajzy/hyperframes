@@ -1,6 +1,6 @@
 import type { Span } from "@hyperframes/core/audio-analysis";
 
-export const READ_VERSION = 2;
+export const READ_VERSION = 3;
 
 export type Separation = "stems" | "mix";
 
@@ -88,17 +88,33 @@ export interface Music {
   energy: { start: number; end: number; db: number }[];
 }
 
+/** A stretch of the non-voice, non-drum stems with no beat, no clear key and at most one instrument: room tone, engine noise, wind. */
+export interface Ambience {
+  start: number;
+  end: number;
+  /** Its level in dBFS. */
+  db: number;
+}
+
+export interface Stem {
+  name: string;
+  /** Its level in dBFS where it is heard. */
+  db: number;
+}
+
 export interface ReadAudio {
   version: typeof READ_VERSION;
   file: string;
   sha256: string;
   duration: number;
   separation: Separation;
-  stems: string[];
+  /** The separated stems that carry sound, loudest first. */
+  stems: Stem[];
   transcript: string | null;
   /** Null when the mix alone cannot tell speech from music: no stems and no transcript. */
   voice: Voice | null;
   effects: Effects | null;
   music: Music | null;
+  ambience: Ambience[] | null;
   warnings: string[];
 }
