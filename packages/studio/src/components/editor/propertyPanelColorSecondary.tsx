@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useRef, useState } from "react";
 import {
   getHfColorGradingCapabilities,
@@ -223,7 +224,7 @@ export function PropertyPanelColorSecondary({
                   onClick={() => setShowMatte(false)}
                   className={!showMatte ? "text-accent-ink" : "text-panel-text-4"}
                 >
-                  Source
+                  {studioT("Source")}
                 </button>
                 <button
                   type="button"
@@ -278,7 +279,7 @@ export function PropertyPanelColorSecondary({
             Qualifier
           </div>
           <FlatSlider
-            label="Hue"
+            label={studioT("Hue")}
             value={selected.key.hue.center}
             min={SECONDARY_CAPABILITIES.hue.center.min}
             max={HUE_CENTER_MAX}

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { audioGainToDb } from "@hyperframes/core/audio-gain";
@@ -195,7 +196,7 @@ export function AudioGainDialog({
             className="rounded px-3 py-1 text-neutral-300 hover:bg-neutral-800"
             onClick={onClose}
           >
-            Cancel
+            {studioT("Cancel")}
           </button>
           <button
             type="button"

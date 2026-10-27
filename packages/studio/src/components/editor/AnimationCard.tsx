@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { GsapAnimation } from "@hyperframes/core/gsap-parser";
 import { SUPPORTED_EASES, SUPPORTED_PROPS } from "@hyperframes/core/gsap-constants";
@@ -177,7 +178,7 @@ export const AnimationCard = memo(function AnimationCard({
       <div className="border-b border-neutral-800 pb-2">
         <div className="flex items-center gap-2 py-1.5">
           <span className="rounded-sm bg-neutral-800 px-1.5 py-0.5 text-[10px] font-medium text-neutral-400">
-            Position
+            {studioT("Position")}
           </span>
           <span className="text-[11px] text-neutral-500">
             x: {Math.round(Number(animation.properties.x ?? 0))}, y:{" "}
@@ -275,7 +276,7 @@ export const AnimationCard = memo(function AnimationCard({
                 className="shrink-0 rounded-sm px-1.5 py-0.5 text-[9px] font-medium text-neutral-500 transition-colors hover:bg-neutral-800 hover:text-neutral-300"
                 title="Copy description for agent prompts"
               >
-                {copied ? "Copied" : "Copy"}
+                {copied ? studioT("Copied") : studioT("Copy")}
               </button>
             </div>
             <div className={RESPONSIVE_GRID}>
@@ -334,7 +335,7 @@ export const AnimationCard = memo(function AnimationCard({
                 ) : (
                   <>
                     <SelectField
-                      label="Speed"
+                      label={studioT("Speed")}
                       value={easeName.startsWith("custom(") ? "custom" : easeName}
                       options={[...SUPPORTED_EASES, "custom"]}
                       onChange={(next) => {
@@ -468,7 +469,7 @@ export const AnimationCard = memo(function AnimationCard({
                 className="ml-auto text-[11px] font-medium rounded-sm text-danger-ink transition-colors hover:bg-danger/15"
                 title="Remove this animation"
               >
-                Remove
+                {studioT("Remove")}
               </button>
             </div>
           </div>

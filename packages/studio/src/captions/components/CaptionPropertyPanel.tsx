@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback, useState } from "react";
 import { useCaptionStore } from "../store";
 import type { CaptionStyle } from "../types";
@@ -245,7 +246,7 @@ export const CaptionPropertyPanel = memo(function CaptionPropertyPanel({
                 : "text-neutral-500 border border-neutral-800 hover:text-neutral-300 hover:border-neutral-600",
             ].join(" ")}
           >
-            Animation
+            {studioT("Animation")}
           </button>
         </div>
       </div>
@@ -256,7 +257,7 @@ export const CaptionPropertyPanel = memo(function CaptionPropertyPanel({
       {/* Style tab — Transform only */}
       {activeTab === "style" && (
         <div className="flex-1 overflow-y-auto px-3 py-2">
-          <Section label="Position">
+          <Section label={studioT("Position")}>
             <Row label="X">
               <NumberField
                 value={x}
@@ -275,21 +276,21 @@ export const CaptionPropertyPanel = memo(function CaptionPropertyPanel({
             </Row>
           </Section>
 
-          <Section label="Transform">
-            <Row label="Scale">
+          <Section label={studioT("Transform")}>
+            <Row label={studioT("Scale")}>
               <NumberField
                 value={scaleX}
                 mixed={scaleMixed}
                 step={0.1}
-                ariaLabel="Scale"
+                ariaLabel={studioT("Scale")}
                 onCommit={(v) => handleStyleChange({ scaleX: v, scaleY: v })}
               />
             </Row>
-            <Row label="Rotation">
+            <Row label={studioT("Rotation")}>
               <NumberField
                 value={rotation}
                 mixed={rotationMixed}
-                ariaLabel="Rotation"
+                ariaLabel={studioT("Rotation")}
                 onCommit={(v) => handleStyleChange({ rotation: v })}
               />
             </Row>

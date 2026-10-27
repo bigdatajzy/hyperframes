@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   googleFontStylesheetUrl,
@@ -468,7 +469,7 @@ export function FontFamilyField({
           onClick={() => fontInputRef.current?.click()}
           className="rounded-lg border border-neutral-700 bg-neutral-900 px-2.5 text-[10px] font-medium text-neutral-400 transition-colors hover:border-neutral-600 hover:text-neutral-100 disabled:cursor-not-allowed disabled:text-text-off"
         >
-          {importingFonts ? "..." : "Import"}
+          {importingFonts ? "..." : studioT("Import")}
         </button>
         <input
           ref={fontInputRef}
@@ -530,7 +531,7 @@ export function FontFamilyField({
   if (flat) {
     return (
       <div ref={containerRef} className="relative flex min-h-[30px] items-center justify-between">
-        <span className="text-[11px] text-panel-text-2">Font</span>
+        <span className="text-[11px] text-panel-text-2">{studioT("Font")}</span>
         <button
           type="button"
           data-flat-font-trigger="true"
@@ -561,7 +562,7 @@ export function FontFamilyField({
 
   return (
     <div ref={containerRef} className="relative grid min-w-0 gap-1.5">
-      <span className={LABEL}>Font family</span>
+      <span className={LABEL}>{studioT("Font family")}</span>
       <button
         type="button"
         disabled={disabled}
@@ -575,7 +576,7 @@ export function FontFamilyField({
           {currentFamily}
         </span>
         <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] text-neutral-600">
-          Font
+          {studioT("Font")}
         </span>
       </button>
       {dropdown}

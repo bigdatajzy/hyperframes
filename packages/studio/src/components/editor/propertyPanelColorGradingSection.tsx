@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { type PointerEvent as ReactPointerEvent, type RefObject } from "react";
 import { isHfColorGradingActive } from "@hyperframes/core/color-grading";
 import { Compare, Palette, RotateCcw } from "../../icons/SystemIcons";
@@ -235,7 +236,7 @@ export function ColorGradingSection({
             className="h-8 rounded-md bg-panel-input px-3 text-[11px] font-medium text-panel-text-2 transition-colors hover:bg-panel-hover hover:text-panel-text-1 disabled:cursor-not-allowed disabled:opacity-50"
             title="Copy these color grading settings to the selected scope"
           >
-            {applyBusy ? "Applying" : "Apply"}
+            {applyBusy ? "Applying" : studioT("Apply")}
           </button>
         </div>
       )}

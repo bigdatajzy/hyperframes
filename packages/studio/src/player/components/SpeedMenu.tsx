@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState, useCallback, memo } from "react";
 import { trackStudioEvent } from "../../utils/studioTelemetry";
 import { Tooltip } from "../../components/ui";
@@ -24,14 +25,14 @@ export const SpeedMenu = memo(function SpeedMenu({
 
   return (
     <div ref={speedMenuContainerRef} className="relative shrink-0">
-      <Tooltip label="Playback speed">
+      <Tooltip label={studioT("Playback speed")}>
         <button
           type="button"
           onClick={() => setShowSpeedMenu((v) => !v)}
           disabled={disabled}
           aria-haspopup="menu"
           aria-expanded={showSpeedMenu}
-          aria-label="Playback speed"
+          aria-label={studioT("Playback speed")}
           className="h-7 w-8 rounded-md font-mono text-[10px] tabular-nums text-neutral-500 transition-colors hover:text-neutral-200 disabled:opacity-30"
         >
           {playbackRate === 1 ? "1x" : `${playbackRate}x`}

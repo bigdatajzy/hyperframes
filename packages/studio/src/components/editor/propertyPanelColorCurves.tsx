@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState } from "react";
 import type { HfColorCurvePoint, HfHueCurvePoint } from "@hyperframes/core/color-grading";
 import { RotateCcw } from "../../icons/SystemIcons";
@@ -126,7 +127,7 @@ export function ColorCurves({
         {selectedPoint ? (
           <>
             <GradingNumberField
-              label={tab.kind === "rgb" ? "Input" : "Hue"}
+              label={tab.kind === "rgb" ? "Input" : studioT("Hue")}
               ariaLabel={`Curve point ${tab.kind === "rgb" ? "input" : "hue"}`}
               value={formatPointValue(selectedPoint[0], tab, "input")}
               min={0}
@@ -141,7 +142,7 @@ export function ColorCurves({
               onCancel={transaction.cancel}
             />
             <GradingNumberField
-              label="Output"
+              label={studioT("Output")}
               ariaLabel="Curve point output"
               value={formatPointValue(selectedPoint[1], tab, "output")}
               min={tab.min}
@@ -161,7 +162,7 @@ export function ColorCurves({
               onClick={deleteSelected}
               className="pb-0.5 text-[9px] text-panel-text-4 hover:text-panel-text-1 disabled:opacity-30"
             >
-              Delete
+              {studioT("Delete")}
             </button>
           </>
         ) : (

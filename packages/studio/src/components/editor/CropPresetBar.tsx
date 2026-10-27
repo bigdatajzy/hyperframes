@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect } from "react";
 import type { ClipPathInsetSides } from "./clipPathHelpers";
 import { CROP_ASPECT_PRESETS, centredCropInsets } from "./cropPresets";
@@ -55,14 +56,14 @@ export function CropPresetBar({
         </button>
       ))}
       <button type="button" className={CHIP} onClick={() => onApply(null)}>
-        Reset
+        {studioT("Reset")}
       </button>
       <button
         type="button"
         className="rounded-sm border border-studio-accent bg-studio-accent px-1.5 py-0.5 text-[10px] font-semibold text-black"
         onClick={onDone}
       >
-        Done
+        {studioT("Done")}
       </button>
     </div>
   );

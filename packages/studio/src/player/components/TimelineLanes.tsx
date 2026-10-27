@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { Fragment, useId, useMemo, useRef, type CSSProperties } from "react";
 import { BeatStrip, BeatBackgroundLines } from "./BeatStrip";
 import { TimelineLaneClip, type TimelineLaneClipActions } from "./TimelineLaneClip";
@@ -169,7 +170,7 @@ export function TimelineLanes({
   return (
     <div
       role="treegrid"
-      aria-label="Timeline tracks"
+      aria-label={studioT("Timeline tracks")}
       aria-rowcount={logicalRows.length}
       aria-colcount={2}
       onFocus={keyboard.onFocus}

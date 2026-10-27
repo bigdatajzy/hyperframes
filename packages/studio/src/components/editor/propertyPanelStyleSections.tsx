@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useRef, useState } from "react";
 import { Eye, Layers, Palette, Settings, Square, Zap } from "../../icons/SystemIcons";
 import { buildDefaultGradientModel, serializeGradient } from "./gradientValue";
@@ -218,7 +219,7 @@ export function StyleSections({
       )}
 
       {hasVisualBackground && (
-        <Section title="Radius" icon={<Settings size={15} />} defaultCollapsed>
+        <Section title={studioT("Radius")} icon={<Settings size={15} />} defaultCollapsed>
           <BorderRadiusEditor
             tl={radiusTL}
             tr={radiusTR}
@@ -243,11 +244,11 @@ export function StyleSections({
         </Section>
       )}
 
-      <Section title="Stroke" icon={<Square size={15} />} defaultCollapsed>
+      <Section title={studioT("Stroke")} icon={<Square size={15} />} defaultCollapsed>
         <div className="space-y-4">
           <div className={RESPONSIVE_GRID}>
             <MetricField
-              label="Width"
+              label={studioT("Width")}
               value={formatPxMetricValue(borderWidthValue)}
               disabled={styleEditingDisabled}
               liveCommit
@@ -301,10 +302,10 @@ export function StyleSections({
         </div>
       </Section>
 
-      <Section title="Effects" icon={<Zap size={15} />} defaultCollapsed>
+      <Section title={studioT("Effects")} icon={<Zap size={15} />} defaultCollapsed>
         <div className="space-y-4">
           <SelectField
-            label="Shadow"
+            label={studioT("Shadow")}
             value={boxShadowPreset}
             disabled={styleEditingDisabled}
             onChange={(next) => {
@@ -360,7 +361,7 @@ export function StyleSections({
         <div className="space-y-4">
           <div className={RESPONSIVE_GRID}>
             <SelectField
-              label="Overflow"
+              label={studioT("Overflow")}
               value={styles.overflow || "visible"}
               disabled={styleEditingDisabled}
               onChange={(next) => onSetStyle("overflow", next)}
@@ -456,7 +457,7 @@ export function StyleSections({
         </div>
       </Section>
 
-      <Section title="Fill" icon={<Palette size={15} />}>
+      <Section title={studioT("Fill")} icon={<Palette size={15} />}>
         <div className="space-y-4">
           <SegmentedControl
             trackName="Fill type"
@@ -464,19 +465,19 @@ export function StyleSections({
             value={preferredFillMode}
             onChange={handleFillModeChange}
             options={[
-              { label: "Solid", value: "Solid" },
-              { label: "Gradient", value: "Gradient" },
-              { label: "Image", value: "Image" },
+              { label: studioT("Solid"), value: "Solid" },
+              { label: studioT("Gradient"), value: "Gradient" },
+              { label: studioT("Image"), value: "Image" },
             ]}
           />
-          {preferredFillMode === "Solid" ? (
+          {preferredFillMode === studioT("Solid") ? (
             <ColorField
               label="Fill color"
               value={styles["background-color"] ?? "transparent"}
               disabled={styleEditingDisabled}
               onCommit={(next) => onSetStyle("background-color", next)}
             />
-          ) : preferredFillMode === "Gradient" ? (
+          ) : preferredFillMode === studioT("Gradient") ? (
             <GradientField
               value={
                 backgroundImage !== "none"

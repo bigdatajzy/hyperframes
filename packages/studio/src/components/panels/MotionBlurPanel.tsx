@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import type { Composition } from "@hyperframes/sdk";
 import type { MotionBlurSettings } from "@hyperframes/core/motion-blur-settings";
@@ -136,8 +137,8 @@ export const MotionBlurPanel = memo(function MotionBlurPanel({
 
   return (
     <div className="flex h-full flex-col gap-3 overflow-y-auto p-3 text-[11px] text-neutral-300">
-      <span className="text-[12px] font-medium text-neutral-100">Motion blur</span>
-      <div role="radiogroup" aria-label="Motion blur" className="flex gap-1.5">
+      <span className="text-[12px] font-medium text-neutral-100">{studioT("Motion blur")}</span>
+      <div role="radiogroup" aria-label={studioT("Motion blur")} className="flex gap-1.5">
         {BLUR_LEVELS.map(({ level, label }) => (
           <Button
             key={level}

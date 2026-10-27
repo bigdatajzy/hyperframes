@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { trackPreviewFeatureUsed } from "../../utils/previewFeatureUsage";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { MagnetStraight, GridFour, Path, Ruler, FrameCorners } from "@phosphor-icons/react";
@@ -138,7 +139,7 @@ export const SnapToolbar = memo(function SnapToolbar() {
         }`}
         onClick={toggleSnap}
         title={prefs.snapEnabled ? "Snap enabled (S)" : "Snap disabled (S)"}
-        aria-label="Toggle snap"
+        aria-label={studioT("Toggle snap")}
       >
         <MagnetStraight size={16} weight={prefs.snapEnabled ? "fill" : "regular"} />
       </button>
@@ -163,7 +164,7 @@ export const SnapToolbar = memo(function SnapToolbar() {
               ? "Grid visible (G). Right-click for spacing options"
               : "Grid hidden (G). Right-click for spacing options"
           }
-          aria-label="Toggle grid"
+          aria-label={studioT("Toggle grid")}
         >
           <GridFour size={16} weight={prefs.gridVisible ? "fill" : "regular"} />
         </button>
@@ -174,8 +175,8 @@ export const SnapToolbar = memo(function SnapToolbar() {
             if (gridPopoverOpen) settleGridSpacing();
             setGridPopoverOpen((v) => !v);
           }}
-          title="Grid options"
-          aria-label="Grid options"
+          title={studioT("Grid options")}
+          aria-label={studioT("Grid options")}
           aria-expanded={gridPopoverOpen}
         >
           <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true">

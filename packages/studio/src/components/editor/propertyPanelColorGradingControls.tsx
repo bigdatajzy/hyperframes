@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useMemo, useRef, useState } from "react";
 import {
   HF_COLOR_GRADING_PRESETS,
@@ -25,7 +26,15 @@ export const COLOR_GRADING_ADJUST_SLIDERS: Array<{
   suffix: string;
 }> = [
   { key: "exposure", label: "Exposure", min: -200, max: 200, step: 5, scale: 100, suffix: "" },
-  { key: "contrast", label: "Contrast", min: -100, max: 100, step: 1, scale: 100, suffix: "%" },
+  {
+    key: "contrast",
+    label: studioT("Contrast"),
+    min: -100,
+    max: 100,
+    step: 1,
+    scale: 100,
+    suffix: "%",
+  },
   {
     key: "highlights",
     label: "Highlights",
@@ -57,7 +66,15 @@ export const COLOR_GRADING_ADJUST_SLIDERS: Array<{
   { key: "temperature", label: "Warmth", min: -100, max: 100, step: 1, scale: 100, suffix: "%" },
   { key: "tint", label: "Tint", min: -100, max: 100, step: 1, scale: 100, suffix: "%" },
   { key: "vibrance", label: "Vibrance", min: -100, max: 100, step: 1, scale: 100, suffix: "%" },
-  { key: "saturation", label: "Saturation", min: -100, max: 100, step: 1, scale: 100, suffix: "%" },
+  {
+    key: "saturation",
+    label: studioT("Saturation"),
+    min: -100,
+    max: 100,
+    step: 1,
+    scale: 100,
+    suffix: "%",
+  },
 ];
 
 export const COLOR_GRADING_DETAIL_SLIDERS: Array<{
@@ -139,7 +156,7 @@ const EFFECT_SLIDERS: Array<{
   scale: number;
   suffix: string;
 }> = [
-  { key: "blur", label: "Blur", min: 0, max: 100, step: 1, scale: 100, suffix: "%" },
+  { key: "blur", label: studioT("Blur"), min: 0, max: 100, step: 1, scale: 100, suffix: "%" },
   { key: "pixelate", label: "Pixelate", min: 0, max: 100, step: 1, scale: 100, suffix: "%" },
 ];
 
@@ -381,7 +398,7 @@ export function ColorGradingControls({
                 className="w-full min-w-0 rounded-md bg-panel-input px-3 py-2 text-[11px] font-medium text-panel-text-1 outline-hidden"
                 title="Uploaded .cube LUT"
               >
-                <option value="">None</option>
+                <option value="">{studioT("None")}</option>
                 {lutAssets.length > 0 && (
                   <optgroup label="Uploaded LUTs">
                     {lutAssets.map((asset) => (
@@ -538,7 +555,7 @@ export function ColorGradingControls({
       </div>
 
       <div className="grid min-w-0 gap-1.5">
-        <span className={LABEL}>Effects</span>
+        <span className={LABEL}>{studioT("Effects")}</span>
         <div className="grid min-w-0 grid-cols-2 gap-1.5">
           {EFFECT_SLIDERS.map((slider) => {
             const value = grading.effects[slider.key] * slider.scale;

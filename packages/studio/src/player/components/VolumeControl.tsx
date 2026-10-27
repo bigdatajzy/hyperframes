@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo } from "react";
 import { Tooltip } from "../../components/ui";
 import { trackStudioEvent } from "../../utils/studioTelemetry";
@@ -68,7 +69,7 @@ export const VolumeControl = memo(function VolumeControl({
             step="1"
             value={percentage}
             disabled={disabled}
-            aria-label="Preview volume"
+            aria-label={studioT("Preview volume")}
             aria-valuetext={`${percentage}%`}
             title={`Preview volume: ${percentage}%`}
             onChange={(event) => {

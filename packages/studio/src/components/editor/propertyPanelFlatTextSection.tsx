@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import type { PropertyPanelProps } from "./propertyPanelTypes";
 import { useEffect, useState } from "react";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
@@ -75,7 +76,7 @@ function FlatTextFieldEditor({
         {({ value, onCommit }) => (
           <TextAreaField
             flat
-            label="Content"
+            label={studioT("Content")}
             value={value ?? field.value}
             autoFocus={autoFocus}
             onCommit={onCommit ?? ((next) => onSetText(next, field.key))}
@@ -99,7 +100,7 @@ function FlatTextFieldEditor({
         )}
       </PromotableControl>
       <FlatRow
-        label="Size"
+        label={studioT("Size")}
         value={field.computedStyles["font-size"] || styles["font-size"] || "16px"}
         tier={resolveValueTier(field.inlineStyles["font-size"], styles["font-size"] || "16px")}
         liveCommit
@@ -113,7 +114,7 @@ function FlatTextFieldEditor({
           }
           style={{ fontSize: 11 }}
         >
-          Weight
+          {studioT("Weight")}
         </span>
         <label className="flex items-center gap-1.5 border-b border-panel-border-input/50 pb-px hover:border-panel-border-input">
           <select
@@ -146,7 +147,7 @@ function FlatTextFieldEditor({
         </label>
       </div>
       <FlatRow
-        label="Letter spacing"
+        label={studioT("Letter spacing")}
         value={getTextStyleValue(field, styles, "letter-spacing", "0px")}
         tier={resolveValueTier(field.inlineStyles["letter-spacing"], "0px")}
         onCommit={(next) =>
@@ -159,7 +160,7 @@ function FlatTextFieldEditor({
         onReset={() => onSetTextFieldStyle(field.key, "letter-spacing", "")}
       />
       <FlatRow
-        label="Line height"
+        label={studioT("Line height")}
         value={getTextStyleValue(field, styles, "line-height", "normal")}
         tier={resolveValueTier(field.inlineStyles["line-height"], "normal")}
         onCommit={(next) =>
@@ -222,7 +223,7 @@ function FlatTextFieldEditor({
         {({ value, onCommit }) => (
           <ColorField
             flat
-            label="Color"
+            label={studioT("Color")}
             value={value ?? getTextFieldColor(field, styles)}
             onPreview={(next) => onPreviewTextFieldStyle?.(field.key, "color", next)}
             onCommit={onCommit ?? ((next) => onSetTextFieldStyle(field.key, "color", next))}

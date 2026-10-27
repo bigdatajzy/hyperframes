@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * The FX entry point from the timeline (C1) — a track or group header button
  * that opens the same preset shelf the property panel's rack uses, without
@@ -129,14 +130,14 @@ function GroupNameDialog({
           className="rounded-sm border border-[var(--timeline-border-strong)] px-2 py-1 text-[10px] text-[var(--timeline-text-soft)] hover:bg-[var(--timeline-tick-major)]"
           onClick={onCancel}
         >
-          Cancel
+          {studioT("Cancel")}
         </button>
         <button
           type="button"
           className="rounded-sm border border-[var(--timeline-accent)] bg-[var(--timeline-accent-button-bg)] px-2 py-1 text-[10px] font-semibold text-[var(--timeline-accent)] hover:bg-[var(--timeline-accent-hover)]"
           onClick={confirm}
         >
-          Group
+          {studioT("Group")}
         </button>
       </div>
     </div>
@@ -253,8 +254,8 @@ export function TimelineFxButton(props: TimelineFxButtonProps) {
         type="button"
         tabIndex={-1}
         ref={buttonRef}
-        aria-label={nodeCount > 0 ? `Effects: ${nodeCount} applied` : "Effects"}
-        title="Effects"
+        aria-label={nodeCount > 0 ? `Effects: ${nodeCount} applied` : studioT("Effects")}
+        title={studioT("Effects")}
         className={`flex h-6 items-center justify-center gap-0.5 rounded border-0 bg-transparent px-1 text-[10px] font-semibold transition-colors ${
           open || nodeCount > 0
             ? "text-[var(--timeline-accent)]"

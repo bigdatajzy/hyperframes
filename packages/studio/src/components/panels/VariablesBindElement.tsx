@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * "Bind selected element" card for the Variables panel — the promote-a-
  * property-to-variable gesture. Each action declares a variable whose default
@@ -94,7 +95,7 @@ export function buildBindActions(
   if (text && snapshot.children.length === 0 && !selection.isCompositionHost) {
     actions.push({
       key: "text",
-      label: "Text",
+      label: studioT("Text"),
       kind: "text",
       suggestedId: `${base}-text`,
       declaration: (id) => ({
@@ -124,7 +125,7 @@ export function buildBindActions(
       },
       {
         key: "background",
-        label: "Background",
+        label: studioT("Background"),
         kind: "style",
         styleProp: "background-color",
         suggestedId: `${base}-bg`,
@@ -137,7 +138,7 @@ export function buildBindActions(
       },
       {
         key: "font",
-        label: "Font",
+        label: studioT("Font"),
         kind: "style",
         styleProp: "font-family",
         suggestedId: `${base}-font`,
@@ -229,7 +230,7 @@ export function VariablesBindElement({
               onClick={() => setActiveKey(null)}
               className="h-6 rounded-sm px-2 text-[10px] text-neutral-500 hover:text-neutral-300"
             >
-              Cancel
+              {studioT("Cancel")}
             </button>
             <button
               type="button"

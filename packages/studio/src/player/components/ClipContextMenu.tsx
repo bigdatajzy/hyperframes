@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useLayoutEffect, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { usePlayerStore, type TimelineElement } from "../store/playerStore";
@@ -211,7 +212,7 @@ export const ClipContextMenu = memo(function ClipContextMenu({
               onClose();
             }}
           >
-            <span>{selectionSize > 1 ? `Copy ${selectionSize} clips` : "Copy"}</span>
+            <span>{selectionSize > 1 ? `Copy ${selectionSize} clips` : studioT("Copy")}</span>
             <span className="text-neutral-500 text-[10px] ml-3">⌘C</span>
           </button>
         )}
@@ -227,7 +228,7 @@ export const ClipContextMenu = memo(function ClipContextMenu({
               onClose();
             }}
           >
-            <span>Paste</span>
+            <span>{studioT("Paste")}</span>
             <span className="text-neutral-500 text-[10px] ml-3">⌘V</span>
           </button>
         )}
@@ -241,13 +242,15 @@ export const ClipContextMenu = memo(function ClipContextMenu({
               onClose();
             }}
           >
-            <span>{selectionSize > 1 ? `Duplicate ${selectionSize} clips` : "Duplicate"}</span>
+            <span>
+              {selectionSize > 1 ? `Duplicate ${selectionSize} clips` : studioT("Duplicate")}
+            </span>
             <span className="text-neutral-500 text-[10px] ml-3">⌘D</span>
           </button>
         )}
       </div>
 
-      <div role="group" aria-label="Delete">
+      <div role="group" aria-label={studioT("Delete")}>
         <button
           type="button"
           role="menuitem"
@@ -257,7 +260,7 @@ export const ClipContextMenu = memo(function ClipContextMenu({
             onClose();
           }}
         >
-          <span>Delete</span>
+          <span>{studioT("Delete")}</span>
           <span className="text-neutral-500 text-[10px] ml-3">⌫</span>
         </button>
         {tools && <ClipMenuLinkItems part="delete" element={element} onClose={onClose} />}

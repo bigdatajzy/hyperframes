@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState } from "react";
 import type { DomEditSelection } from "./domEditingTypes";
 import { MetricField } from "./propertyPanelPrimitives";
@@ -371,7 +372,7 @@ export function PropertyPanel3dTransform({
             />
             <Transform3dField
               ctx={ctx}
-              label="Scale"
+              label={studioT("Scale")}
               prop="scale"
               scrub
               format={(v) => String(v)}
@@ -404,7 +405,7 @@ export function PropertyPanel3dTransform({
             />
             <Transform3dField
               ctx={ctx}
-              label="Perspective"
+              label={studioT("Perspective")}
               prop="transformPerspective"
               scrub
               format={formatPxMetricValue}

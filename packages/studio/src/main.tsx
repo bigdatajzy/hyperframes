@@ -1,3 +1,4 @@
+import { getStudioLocale } from "./i18n/locale";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { IconContext } from "@phosphor-icons/react";
@@ -109,6 +110,8 @@ window.addEventListener("unhandledrejection", (event) => {
 
   trackStudioEvent("unhandled_promise_rejection", props);
 });
+
+document.documentElement.lang = getStudioLocale();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

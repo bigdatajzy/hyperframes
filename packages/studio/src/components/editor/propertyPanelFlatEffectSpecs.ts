@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import {
   getHfColorGradingCapabilities,
   normalizeHfColorGrading,
@@ -104,7 +105,7 @@ export const EFFECT_GROUPS: readonly EffectGroup[] = [
     effects: [
       {
         key: "blur",
-        label: "Blur",
+        label: studioT("Blur"),
         masterLabel: "Radius",
         masterFormat: (value) => `${(0.75 + Math.pow(value, 1.35) * 32).toFixed(1)}px`,
       },
@@ -123,7 +124,7 @@ export const EFFECT_GROUPS: readonly EffectGroup[] = [
           {
             kind: "slider",
             key: "bloomRadius",
-            label: "Radius",
+            label: studioT("Radius"),
             ...controlRange("bloomRadius", 1),
             unit: "px",
           },

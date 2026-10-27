@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 // fallow-ignore-file code-duplication
 import { memo, useState, useCallback, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
@@ -61,7 +62,11 @@ export const BlocksTab = memo(function BlocksTab({ onAddBlock, onPreviewBlock }:
       {/* Category pills */}
       <div className="px-3 pt-1 pb-2 shrink-0 overflow-x-auto">
         <div className="flex gap-1">
-          <CategoryPill label="All" active={category === null} onClick={() => setCategory(null)} />
+          <CategoryPill
+            label={studioT("All")}
+            active={category === null}
+            onClick={() => setCategory(null)}
+          />
           {BLOCK_CATEGORIES.map((cat) => (
             <CategoryPill
               key={cat.id}
@@ -442,8 +447,8 @@ function BlockCard({
                 : addState === "added"
                   ? "Added!"
                   : addState === "failed"
-                    ? "Failed"
-                    : "Add"}
+                    ? studioT("Failed")
+                    : studioT("Add")}
             </button>
           )}
           <button

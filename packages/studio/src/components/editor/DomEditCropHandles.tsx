@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { trackPreviewEditResult, type PreviewMethod } from "../../utils/previewFeatureUsage";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { DomEditSelection } from "./domEditing";
@@ -358,7 +359,7 @@ export function DomEditCropHandles({
               key={edge}
               type="button"
               aria-label={`Crop ${edge}`}
-              title="Crop"
+              title={studioT("Crop")}
               data-dom-edit-crop-handle="true"
               className="pointer-events-auto absolute flex items-center justify-center border-0 bg-transparent p-0"
               style={{

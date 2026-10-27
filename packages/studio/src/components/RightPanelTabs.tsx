@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 /**
  * The inspector tab strip on the shared Tabs primitive. The selected tab is derived from the
  * panel's state; in the legacy split inspector two can be open, only one holds `aria-selected`.
@@ -39,7 +40,7 @@ export function RightPanelTabs({
       }}
     >
       <TabsList
-        aria-label="Inspector panels"
+        aria-label={studioT("Inspector panels")}
         activateOnFocus={activateOnFocus}
         className="flex min-w-0 items-center gap-1 overflow-hidden rounded-none border-b border-border-strong bg-transparent px-3 py-2"
       >

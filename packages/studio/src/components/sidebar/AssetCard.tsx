@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * AssetCard and FontRow — visual asset tile / row components for the Assets panel.
  * Extracted from AssetsTab.tsx to keep that file under the 600-line CI gate.
@@ -34,7 +35,7 @@ function CopyChip({ feedback, asset }: { feedback: CopyFeedback; asset: string }
         feedback.ok ? "text-accent-ink bg-panel-accent/10" : "text-danger-ink bg-red-500/10"
       }`}
     >
-      {feedback.ok ? "Copied" : "Copy failed"}
+      {feedback.ok ? studioT("Copied") : "Copy failed"}
     </span>
   );
 }

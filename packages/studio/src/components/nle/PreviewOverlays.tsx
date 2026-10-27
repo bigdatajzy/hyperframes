@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback } from "react";
 import { CaptionOverlay } from "../../captions/components/CaptionOverlay";
 import { useCaptionStore } from "../../captions/store";
@@ -112,7 +113,7 @@ export function PreviewOverlays({
               onClick={() => useCaptionStore.getState().retrySave?.()}
               className="rounded-sm text-2xs text-red-100 underline underline-offset-2 hover:text-white"
             >
-              Retry
+              {studioT("Retry")}
             </button>
             <button
               type="button"

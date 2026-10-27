@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * SlideshowPanel — Studio right-panel tab for authoring the slideshow island.
  *
@@ -442,7 +443,7 @@ export function SlideshowPanel({ scenes, onPersist, onPersistNotes }: SlideshowP
             onClick={handleRetryPersist}
             className="px-2 py-0.5 text-[10px] rounded-sm bg-danger text-on-danger enabled:hover:brightness-95 enabled:active:scale-[0.97] disabled:opacity-50 transition-colors"
           >
-            {retrying ? "Retrying…" : "Retry"}
+            {retrying ? "Retrying…" : studioT("Retry")}
           </button>
         </div>
       )}

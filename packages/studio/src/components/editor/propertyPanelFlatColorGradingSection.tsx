@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   HF_COLOR_GRADING_GRADE_PRESETS,
@@ -395,7 +396,7 @@ export function FlatColorGradingSection({
           <div className="space-y-1.5 pb-1">
             <div className="flex items-center justify-between gap-2">
               <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-panel-text-3">
-                {selectedLutName ?? "None"}
+                {selectedLutName ?? studioT("None")}
               </span>
               <select
                 data-flat-grade-lut-select="true"
@@ -408,7 +409,7 @@ export function FlatColorGradingSection({
                 }}
                 className="border-b border-panel-border-input/50 bg-transparent font-mono text-[10px] text-panel-text-3 outline-hidden hover:border-panel-border-input"
               >
-                <option value="">None</option>
+                <option value="">{studioT("None")}</option>
                 {lutAssets.map((asset) => (
                   <option key={asset} value={asset}>
                     {asset.split("/").pop() ?? asset}
@@ -518,7 +519,7 @@ export function FlatColorGradingSection({
             }}
             className="text-[11px] font-medium text-accent-ink hover:text-accent-ink/80 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {applyBusy ? "Applying" : "Apply"}
+            {applyBusy ? "Applying" : studioT("Apply")}
           </button>
         </div>
       )}

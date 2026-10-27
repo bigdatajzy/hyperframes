@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useEffect, useState } from "react";
 import { studioApiFetch } from "../utils/studioApiFetch";
 
@@ -78,7 +79,7 @@ export function ProjectUnreachableBanner({ projectId }: ProjectUnreachableBanner
             onClick={() => window.location.reload()}
             className="shrink-0 rounded-sm border border-amber-300/20 px-2 py-1 text-[11px] text-amber-100 transition-colors hover:bg-amber-400/10 active:scale-[0.98]"
           >
-            Open {servedLabel}
+            {studioT("Open")} {servedLabel}
           </button>
         </>
       ) : (

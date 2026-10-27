@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useRef, useEffect, memo } from "react";
 import gsap from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
@@ -68,7 +69,7 @@ const LoopButton = memo(function LoopButton({
   setLoopEnabled: (v: boolean) => void;
 }) {
   return (
-    <Tooltip label="Loop playback">
+    <Tooltip label={studioT("Loop playback")}>
       <button
         type="button"
         onClick={() => {
@@ -79,7 +80,7 @@ const LoopButton = memo(function LoopButton({
         className={`flex h-7 w-7 items-center justify-center rounded-md transition-colors disabled:opacity-30 ${
           loopEnabled ? "text-accent-ink" : "text-neutral-500 hover:text-neutral-200"
         }`}
-        aria-label={loopEnabled ? "Disable loop playback" : "Enable loop playback"}
+        aria-label={loopEnabled ? "Disable loop playback" : studioT("Enable loop playback")}
         aria-pressed={loopEnabled}
       >
         <svg
@@ -121,7 +122,7 @@ const FullscreenButton = memo(function FullscreenButton({
         className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md transition-colors ${
           isFullscreen ? "text-accent-ink" : "text-neutral-500 hover:text-neutral-200"
         }`}
-        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+        aria-label={isFullscreen ? studioT("Exit fullscreen") : studioT("Enter fullscreen")}
       >
         <svg
           width="13"
@@ -250,10 +251,10 @@ export const PlayerControls = memo(function PlayerControls({
           </button>
         </Tooltip>
 
-        <Tooltip label={isPlaying ? "Pause" : "Play"}>
+        <Tooltip label={isPlaying ? studioT("Pause") : studioT("Play")}>
           <button
             type="button"
-            aria-label={isPlaying ? "Pause" : "Play"}
+            aria-label={isPlaying ? studioT("Pause") : studioT("Play")}
             onClick={() => {
               trackStudioEvent("playback", { action: isPlaying ? "pause" : "play" });
               onTogglePlay();

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo } from "react";
 import type { GsapAnimation } from "@hyperframes/core/gsap-parser";
 import { Film } from "../../icons/SystemIcons";
@@ -22,7 +23,7 @@ export const GsapAnimationSection = memo(function GsapAnimationSection({
   ...callbacks
 }: GsapAnimationSectionProps) {
   return (
-    <Section title="Animation" icon={<Film size={15} />}>
+    <Section title={studioT("Animation")} icon={<Film size={15} />}>
       {multipleTimelines && (
         <p className="mb-2 rounded-lg bg-amber-500/10 px-3 py-2 text-[11px] leading-relaxed text-warning-ink">
           This file has multiple GSAP timelines. Animation editing is disabled to prevent data loss.

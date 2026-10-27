@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useStudioShellContextOptional } from "../contexts/StudioContext";
 import { RotateCcw, RotateCw } from "../icons/SystemIcons";
 import { trackStudioEvent } from "../utils/studioTelemetry";
@@ -19,7 +20,7 @@ function HistoryButton({ action, can, label, onClick }: HistoryButtonProps) {
     <Tooltip label={historyTooltipLabel(action, label)}>
       <button
         type="button"
-        aria-label={action === "undo" ? "Undo" : "Redo"}
+        aria-label={action === "undo" ? studioT("Undo") : studioT("Redo")}
         disabled={!enabled}
         className={enabled ? flatIdle : flatDisabled}
         onClick={() => {

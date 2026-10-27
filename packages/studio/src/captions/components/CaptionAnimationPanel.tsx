@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback } from "react";
 import { useCaptionStore } from "../store";
 import type { CaptionAnimation } from "../types";
@@ -114,7 +115,7 @@ function AnimationPhase({
         </select>
       </Row>
 
-      <Row label="Duration">
+      <Row label={studioT("Duration")}>
         <NumberField
           value={duration}
           step={0.05}
@@ -126,7 +127,7 @@ function AnimationPhase({
         />
       </Row>
 
-      <Row label="Ease">
+      <Row label={studioT("Ease")}>
         <select
           value={ease}
           disabled={disabled}
@@ -155,7 +156,7 @@ function AnimationPhase({
       </Row>
 
       {showIntensity && (
-        <Row label="Intensity">
+        <Row label={studioT("Intensity")}>
           <div className="flex items-center gap-2">
             <input
               type="range"

@@ -1,5 +1,6 @@
+import { t as studioT } from "../../i18n/locale";
 export const EASE_PRESETS = [
-  { id: "linear", label: "Linear", ease: "none", kind: "curve" },
+  { id: "linear", label: studioT("Linear"), ease: "none", kind: "curve" },
   { id: "ease-in", label: "Ease In", ease: "power1.in", kind: "curve" },
   { id: "quad-in", label: "Quad In", ease: "power2.in", kind: "curve" },
   { id: "cubic-in", label: "Cubic In", ease: "power3.in", kind: "curve" },

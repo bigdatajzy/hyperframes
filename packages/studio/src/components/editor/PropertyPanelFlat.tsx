@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { scopedElementKey } from "../../hooks/gsapKeyframeCacheHelpers";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -320,7 +321,7 @@ export function PropertyPanelFlat({
   if (isTextEditable) {
     groups.push({
       id: "text",
-      title: "Text",
+      title: studioT("Text"),
       summary: formatTextFieldPreview(element.textFields[0]?.value ?? ""),
       content: (
         <FlatTextSection
@@ -362,7 +363,7 @@ export function PropertyPanelFlat({
   if (sections.layout) {
     groups.push({
       id: "layout",
-      title: "Layout",
+      title: studioT("Layout"),
       summary: `${formatPxMetricValue(displayX)},${formatPxMetricValue(displayY)} · ${Math.round(displayW)}×${Math.round(displayH)}`,
       content: (
         <FlatLayoutSection
@@ -457,7 +458,7 @@ export function PropertyPanelFlat({
     };
     groups.push({
       id: "effects",
-      title: "Effects",
+      title: studioT("Effects"),
       accessory: <FlatEffectsAccessory {...effectsProps} />,
       summary: activeEffects ? `${activeEffects} active` : "none",
       content: (
@@ -507,7 +508,7 @@ export function PropertyPanelFlat({
   if (sections.media) {
     groups.push({
       id: "media",
-      title: "Media",
+      title: studioT("Media"),
       summary: element.tagName,
       content: (
         <FlatMediaSection

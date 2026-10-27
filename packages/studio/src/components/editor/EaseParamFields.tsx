@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useId, useRef, useState } from "react";
 import { parseSpringBounce } from "@hyperframes/core/spring-ease";
 import {
@@ -211,7 +212,7 @@ export function WiggleField({
         />
       </div>
       <div className="flex items-center gap-1">
-        <span aria-hidden="true">Type</span>
+        <span aria-hidden="true">{studioT("Type")}</span>
         <select
           aria-label="Wiggle type"
           value={config.type}

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { filename } from "./assetHelpers";
 import { menuClasses } from "../ui/menuStyle";
@@ -140,7 +141,7 @@ export function ContextMenu({
             </button>
             {onRename && (
               <button role="menuitem" onClick={() => setMode("rename")} className={itemCls}>
-                Rename
+                {studioT("Rename")}
               </button>
             )}
             {onDelete && (
@@ -149,7 +150,7 @@ export function ContextMenu({
                 onClick={() => setMode("confirm-delete")}
                 className={`${menuClasses.row} ${menuClasses.rowDanger} active:bg-neutral-700/70 transition-colors`}
               >
-                Delete
+                {studioT("Delete")}
               </button>
             )}
           </>
@@ -189,13 +190,13 @@ export function ContextMenu({
                 onClick={() => setMode("menu")}
                 className="px-2 py-0.5 text-[10px] rounded-sm text-neutral-400 hover:text-neutral-200 transition-colors"
               >
-                Cancel
+                {studioT("Cancel")}
               </button>
               <button
                 onClick={commitRename}
                 className="px-2 py-0.5 text-[10px] rounded-sm bg-accent hover:bg-accent-hover text-on-accent transition-colors"
               >
-                Rename
+                {studioT("Rename")}
               </button>
             </div>
           </div>
@@ -216,19 +217,21 @@ function DeleteConfirm({
 }) {
   return (
     <div className="px-2 py-1.5 bg-danger/15 border-l-2 border-red-500 flex items-center justify-between gap-2">
-      <span className="text-[10px] text-danger-ink truncate">Delete {name}?</span>
+      <span className="text-[10px] text-danger-ink truncate">
+        {studioT("Delete")} {name}?
+      </span>
       <div className="flex items-center gap-1 shrink-0">
         <button
           onClick={onConfirm}
           className="px-2 py-0.5 text-[10px] rounded-sm bg-danger text-on-danger hover:brightness-95 active:brightness-90 transition-colors"
         >
-          Delete
+          {studioT("Delete")}
         </button>
         <button
           onClick={onCancel}
           className="px-2 py-0.5 text-[10px] rounded-sm text-neutral-400 hover:text-neutral-200 transition-colors"
         >
-          Cancel
+          {studioT("Cancel")}
         </button>
       </div>
     </div>

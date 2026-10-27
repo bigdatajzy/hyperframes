@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useEffect, useRef, useState } from "react";
 import { BEAT_BAND_H } from "./BeatStrip";
 import { TimelineDiamondConnectors } from "./TimelineDiamondConnectors";
@@ -348,7 +349,7 @@ export const TimelineDiamondLane = memo(function TimelineDiamondLane({
             aria-current={atPlayhead ? "time" : undefined}
             data-keyframe-outside-clip={boundary ?? undefined}
             tabIndex={focusId === rovingTargetId ? 0 : -1}
-            aria-label={`${kf.propertyGroup ?? "Motion"} keyframe at ${keyframeTimeLabel(clipStart, clipDuration, kf.percentage)}${boundary ? ` (${boundary} clip)` : ""}`}
+            aria-label={`${kf.propertyGroup ?? studioT("Motion")} keyframe at ${keyframeTimeLabel(clipStart, clipDuration, kf.percentage)}${boundary ? ` (${boundary} clip)` : ""}`}
             aria-pressed={isKfSelected}
             style={{
               left: leftPx,

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useState, useRef, useEffect, useLayoutEffect, useId } from "react";
 import { createPortal } from "react-dom";
 import { CANVAS_DIMENSIONS } from "@hyperframes/parsers";
@@ -268,9 +269,9 @@ const FORMAT_OPTIONS: SelectOption[] = [
 ];
 
 const QUALITY_OPTIONS: SelectOption[] = [
-  { value: "draft", label: "Draft" },
-  { value: "standard", label: "Standard" },
-  { value: "high", label: "High Quality" },
+  { value: "draft", label: studioT("Draft") },
+  { value: "standard", label: studioT("Standard") },
+  { value: "high", label: studioT("High Quality") },
 ];
 
 function FormatExportButton({
@@ -323,11 +324,11 @@ function FormatExportButton({
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-1">
-            <span className="text-step-10 text-text-4">Format</span>
+            <span className="text-step-10 text-text-4">{studioT("Format")}</span>
             <FormatInfoTooltip format={format} />
           </div>
           <Select
-            label="Format"
+            label={studioT("Format")}
             value={format}
             options={FORMAT_OPTIONS}
             disabled={isRendering}
@@ -339,9 +340,9 @@ function FormatExportButton({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <span className="text-step-10 text-text-4">Resolution</span>
+          <span className="text-step-10 text-text-4">{studioT("Resolution")}</span>
           <Select
-            label="Resolution"
+            label={studioT("Resolution")}
             value={resolution}
             options={SCALE_OPTION_ORDER.map((value) => ({
               value,
@@ -353,9 +354,9 @@ function FormatExportButton({
           />
         </div>
         <div className="flex flex-col gap-1">
-          <span className="text-step-10 text-text-4">Frame rate</span>
+          <span className="text-step-10 text-text-4">{studioT("Frame rate")}</span>
           <Select
-            label="Frame rate"
+            label={studioT("Frame rate")}
             value={String(fps)}
             options={getRenderFpsOptions(format)}
             disabled={isRendering}
@@ -368,9 +369,9 @@ function FormatExportButton({
         </div>
         {showQuality && (
           <div className="flex flex-col gap-1">
-            <span className="text-step-10 text-text-4">Quality</span>
+            <span className="text-step-10 text-text-4">{studioT("Quality")}</span>
             <Select
-              label="Quality"
+              label={studioT("Quality")}
               value={quality}
               options={QUALITY_OPTIONS}
               disabled={isRendering}
@@ -426,7 +427,7 @@ function FormatExportButton({
         // (AE3), which is exactly what it used to do.
         className="w-full"
       >
-        {isRendering ? "Rendering…" : "Export"}
+        {isRendering ? studioT("Rendering…") : studioT("Export")}
       </Button>
       <RenderDurationNote durationMs={lastRenderDurationMs} isRendering={isRendering} />
     </div>
@@ -517,7 +518,7 @@ export const RenderQueue = memo(function RenderQueue({
             <p className="text-step-10 text-danger-ink text-center">{loadError}</p>
             {onRetryLoad && (
               <Button size="sm" variant="secondary" onClick={onRetryLoad}>
-                Retry
+                {studioT("Retry")}
               </Button>
             )}
           </div>
@@ -548,7 +549,7 @@ export const RenderQueue = memo(function RenderQueue({
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-step-10 text-text-5 text-center">No renders yet</p>
+            <p className="text-step-10 text-text-5 text-center">{studioT("No renders yet")}</p>
           </div>
         ) : (
           <div>

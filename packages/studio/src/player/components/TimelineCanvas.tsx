@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo } from "react";
 import { TimelineRulerPart } from "./TimelineRulerPart";
 import { PlayheadIndicator } from "./PlayheadIndicator";
@@ -95,7 +96,7 @@ export const TimelineCanvas = memo(function TimelineCanvas() {
             height: TRACK_H - CLIP_Y * 2,
           }}
         >
-          {props.acceptsMediaDrop && "Drop media here"}
+          {props.acceptsMediaDrop && studioT("Drop media here")}
         </div>
       )}
 

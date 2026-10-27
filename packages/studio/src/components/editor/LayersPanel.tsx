@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useLivePreviewIframe } from "../../player/store/previewIframeStore";
 import { onPreviewContentReplaced } from "../../player/sceneSwap";
 import { memo, useState, useCallback, useEffect, useRef } from "react";
@@ -417,7 +418,7 @@ export const LayersPanel = memo(function LayersPanel({ host }: { host?: LayersPa
     return (
       <div className="flex h-full flex-col items-center justify-center bg-panel-bg px-6 text-center">
         <Layers size={18} className="mb-3 text-panel-text-5" />
-        <p className="text-sm font-medium text-panel-text-1">No layers</p>
+        <p className="text-sm font-medium text-panel-text-1">{studioT("No layers")}</p>
         <p className="mt-1 text-xs text-neutral-500">Load a composition to see its element tree</p>
       </div>
     );
@@ -446,7 +447,7 @@ export const LayersPanel = memo(function LayersPanel({ host }: { host?: LayersPa
           >
             <span aria-hidden="true">←</span>
             <span className="truncate">
-              {activeGroupElement.getAttribute("data-hf-group") || "Group"}
+              {activeGroupElement.getAttribute("data-hf-group") || studioT("Group")}
             </span>
           </button>
         )}

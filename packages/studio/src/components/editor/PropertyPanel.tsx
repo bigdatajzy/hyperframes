@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { scopedElementKey } from "../../hooks/gsapKeyframeCacheHelpers";
 import { memo, useMemo, useRef, useState } from "react";
 import { Move } from "../../icons/SystemIcons";
@@ -363,7 +364,7 @@ export const PropertyPanel = memo(function PropertyPanel(props: PropertyPanelPro
         {sections.media && <MediaSection {...props} element={element} styles={styles} />}
 
         {sections.layout && (
-          <Section title="Layout" icon={<Move size={15} />}>
+          <Section title={studioT("Layout")} icon={<Move size={15} />}>
             <div className={RESPONSIVE_GRID}>
               <div className="flex items-center gap-1">
                 <div className="flex-1">

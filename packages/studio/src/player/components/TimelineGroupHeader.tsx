@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import type { HfAudioFxChain } from "@hyperframes/core/audio-fx";
 import { TRACK_H } from "./timelineLayout";
 import type { TimelineTheme } from "./timelineTheme";
@@ -121,8 +122,8 @@ export function TimelineGroupHeader({
         type="button"
         tabIndex={-1}
         aria-expanded={isExpanded}
-        aria-label={`${isExpanded ? "Hide" : "Show"} ${label} tracks`}
-        title={`${isExpanded ? "Hide" : "Show"} tracks`}
+        aria-label={`${isExpanded ? studioT("Hide") : studioT("Show")} ${label} tracks`}
+        title={`${isExpanded ? studioT("Hide") : studioT("Show")} tracks`}
         // 13px mono, matching the property panel's preset-run caret
         // (`hf-fx-preset-run-caret`) — the same disclosure, so the same glyph
         // at the same size rather than a smaller one unique to this row.
@@ -170,8 +171,8 @@ export function TimelineGroupHeader({
             type="button"
             tabIndex={-1}
             aria-expanded={isLaneOpen}
-            aria-label={`${isLaneOpen ? "Hide" : "Show"} ${label} lanes`}
-            title={`${isLaneOpen ? "Hide" : "Show"} lanes`}
+            aria-label={`${isLaneOpen ? studioT("Hide") : studioT("Show")} ${label} lanes`}
+            title={`${isLaneOpen ? studioT("Hide") : studioT("Show")} lanes`}
             // Anchored right, matching every other header's lane toggle.
             className={`ml-auto flex h-6 items-center justify-center gap-0.5 rounded border-0 bg-transparent px-1 text-[11px] leading-none focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-[var(--timeline-accent)] ${
               isLaneOpen

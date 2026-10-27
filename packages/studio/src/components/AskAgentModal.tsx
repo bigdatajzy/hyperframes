@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useState, useRef, type CSSProperties } from "react";
 import { useMountEffect } from "../hooks/useMountEffect";
 import { type AgentModalAnchorPoint, clampNumber } from "../utils/studioHelpers";
@@ -93,7 +94,7 @@ export function AskAgentModal({
           <button
             className="p-1 rounded-md text-neutral-500 hover:text-neutral-300 hover:bg-neutral-800/50 active:scale-[0.98]"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={studioT("Close")}
           >
             <svg
               width="14"

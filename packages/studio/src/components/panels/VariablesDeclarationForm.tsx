@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * Add/edit form for a variable declaration. Builds a typed
  * CompositionVariable from free-text drafts; structural validation beyond
@@ -265,7 +266,7 @@ export function DeclarationForm({
         </Field>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <Field label="Type">
+        <Field label={studioT("Type")}>
           <select
             value={draft.type}
             onChange={(e) => {
@@ -281,7 +282,7 @@ export function DeclarationForm({
             ))}
           </select>
         </Field>
-        <Field label="Default">
+        <Field label={studioT("Default")}>
           <DefaultField draft={draft} onChange={(defaultRaw) => set({ defaultRaw })} />
         </Field>
       </div>
@@ -324,7 +325,7 @@ export function DeclarationForm({
           onClick={onCancel}
           className="h-6 rounded-sm px-2 text-[10px] text-neutral-500 hover:text-neutral-300"
         >
-          Cancel
+          {studioT("Cancel")}
         </button>
         <button
           type="button"

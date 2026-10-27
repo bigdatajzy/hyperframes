@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { HiddenToggleIcon, hiddenToggleVerb } from "../../player/components/hiddenToggle";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
 import { ClipboardList, Film, Square, Type, X } from "../../icons/SystemIcons";
@@ -53,7 +54,7 @@ export function PropertyPanelFlatHeader({
         {showUngroup && (
           <button
             type="button"
-            aria-label="Ungroup"
+            aria-label={studioT("Ungroup")}
             title="Ungroup (⌘⇧G)"
             onClick={() => {
               track("button", "Ungroup");

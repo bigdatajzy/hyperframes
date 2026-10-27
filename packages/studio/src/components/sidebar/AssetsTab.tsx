@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { buildProjectApiPath } from "../../utils/projectRouting";
 // fallow-ignore-file code-duplication
 import { memo, useState, useCallback, useRef, useMemo, useEffect } from "react";
@@ -401,7 +402,7 @@ export const AssetsTab = memo(function AssetsTab({
                   : "bg-panel-input text-panel-text-3 hover:text-panel-text-1"
               }`}
             >
-              All {counts.all}
+              {studioT("All")} {counts.all}
             </button>
             {FILTER_ORDER.map((cat) =>
               counts[cat] > 0 ? (

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * The FX popover the timeline's per-track/per-group FX button opens (C1).
  *
@@ -138,7 +139,7 @@ export function TimelineFxPopover({
     <div
       ref={rootRef}
       role="dialog"
-      aria-label="Effects"
+      aria-label={studioT("Effects")}
       className="z-200 flex flex-col overflow-hidden rounded-md border border-border bg-raised p-2 shadow-xl"
       style={clampedStyle(anchorRect)}
       onKeyDown={onKeyDown}

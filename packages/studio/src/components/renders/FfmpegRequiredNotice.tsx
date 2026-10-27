@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useEffect, useRef, useState } from "react";
 import { copyTextToClipboard } from "../../utils/clipboard";
 import type { FfmpegStatus } from "./useFfmpegStatus";
@@ -91,7 +92,7 @@ export const FfmpegRequiredNotice = memo(function FfmpegRequiredNotice({
             onClick={() => void copy(status.command ?? "")}
             className={`h-6 w-14 shrink-0 rounded-xs border border-amber-500/30 text-[10px] font-medium text-warning-ink transition-colors hover:bg-amber-500/20 active:scale-[0.98] ${FOCUS_RING}`}
           >
-            {copied ? "Copied" : "Copy"}
+            {copied ? studioT("Copied") : studioT("Copy")}
           </button>
         </div>
       ) : (

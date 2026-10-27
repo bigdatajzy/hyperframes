@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { Plus, Type } from "../../icons/SystemIcons";
 import { isTextEditableSelection, type DomEditSelection } from "./domEditing";
@@ -189,7 +190,9 @@ function FontWeightField({
   return (
     <div className={FIELD}>
       <div className="flex min-w-0 items-center gap-3">
-        <span className="shrink-0 text-[11px] font-medium text-neutral-500">Weight</span>
+        <span className="shrink-0 text-[11px] font-medium text-neutral-500">
+          {studioT("Weight")}
+        </span>
         <select
           value={value}
           disabled={disabled}
@@ -232,7 +235,7 @@ function AdvancedTextControls({
           onChange={(n) => onCommit("line-height", normalizeTextMetricValue("line-height", n))}
         />
         <SelectField
-          label="Track"
+          label={studioT("Track")}
           value={getTextStyleValue(field, inheritedStyles, "letter-spacing", "0px")}
           disabled={disabled}
           options={[
@@ -312,7 +315,7 @@ function TextFieldEditor({
       <div className={showRemove ? "flex min-w-0 items-center justify-between gap-2" : "min-w-0"}>
         <div className="min-w-0">
           <div className="truncate text-[11px] font-medium text-neutral-100">
-            {formatTextFieldPreview(field.value) || "Text"}
+            {formatTextFieldPreview(field.value) || studioT("Text")}
           </div>
           <div className="text-[10px] text-neutral-500">{field.tagName}</div>
         </div>
@@ -325,7 +328,7 @@ function TextFieldEditor({
             }}
             className="inline-flex h-7 shrink-0 items-center rounded-lg border border-neutral-700 bg-neutral-950 px-2.5 text-[11px] font-medium text-neutral-300 transition-colors hover:border-neutral-600 hover:text-text-0"
           >
-            Remove
+            {studioT("Remove")}
           </button>
         )}
       </div>
@@ -333,7 +336,7 @@ function TextFieldEditor({
         {({ value, onCommit }) => (
           <TextAreaField
             key={field.key}
-            label="Content"
+            label={studioT("Content")}
             value={value ?? field.value}
             disabled={false}
             autoFocus={showRemove}
@@ -356,7 +359,7 @@ function TextFieldEditor({
       </PromotableControl>
       <div className={RESPONSIVE_GRID}>
         <MetricField
-          label="Size"
+          label={studioT("Size")}
           value={field.computedStyles["font-size"] || styles["font-size"] || "16px"}
           disabled={false}
           liveCommit
@@ -455,7 +458,7 @@ export function TextSection({
     );
     if (hideOwnHeading) return content;
     return (
-      <Section title="Text" icon={<Type size={15} />} defaultCollapsed>
+      <Section title={studioT("Text")} icon={<Type size={15} />} defaultCollapsed>
         {content}
       </Section>
     );
@@ -527,7 +530,7 @@ export function TextSection({
   );
   if (hideOwnHeading) return content;
   return (
-    <Section title="Text" icon={<Type size={15} />}>
+    <Section title={studioT("Text")} icon={<Type size={15} />}>
       {content}
     </Section>
   );

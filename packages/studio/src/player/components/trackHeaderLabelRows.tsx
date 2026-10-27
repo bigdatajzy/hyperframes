@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * The rows a track header draws BELOW its own line: one per disclosed keyframe
  * property group, one per automation envelope.
@@ -151,8 +152,8 @@ export function PropertyGroupHeaderRow({
         <button
           type="button"
           aria-pressed={!!navigation.currentKeyframe}
-          aria-label={`${navigation.currentKeyframe ? "Remove" : "Add"} ${label} keyframe`}
-          title={`${navigation.currentKeyframe ? "Remove" : "Add"} ${label} keyframe`}
+          aria-label={`${navigation.currentKeyframe ? studioT("Remove") : studioT("Add")} ${label} keyframe`}
+          title={`${navigation.currentKeyframe ? studioT("Remove") : studioT("Add")} ${label} keyframe`}
           // h-6 w-6 = the 24x24 WCAG 2.2 minimum target; the ◆ glyph stays 11px.
           className="flex h-6 w-6 shrink-0 items-center justify-center border-0 bg-transparent p-0 text-[11px] text-accent-ink focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-ring"
           onClick={(event) => {

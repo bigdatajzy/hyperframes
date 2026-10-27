@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /** Bare keys Studio's hotkeys bind; the shortcuts list names them from here. */
 export const STUDIO_PLAIN_KEYS = {
   fullscreen: "f",
@@ -26,11 +27,11 @@ export const ZOOM_SELECTION_SHORTCUT_HINT = hintKey(STUDIO_PLAIN_KEYS.zoomSelect
 /** What PlayerControls' shortcuts panel lists unless an embedder passes its own sections. */
 export const DEFAULT_SHORTCUT_SECTIONS: readonly ShortcutSection[] = [
   {
-    title: "Playback",
+    title: studioT("Playback"),
     hints: [
       { key: "Space", label: "Play / Pause" },
       { key: "J", label: "Play backward" },
-      { key: "K", label: "Stop" },
+      { key: "K", label: studioT("Stop") },
       { key: "L", label: "Play forward" },
       { key: "M", label: "Toggle mute" },
       { key: "⇧L", label: "Toggle loop" },
@@ -50,8 +51,8 @@ export const DEFAULT_SHORTCUT_SECTIONS: readonly ShortcutSection[] = [
   {
     title: "Editing",
     hints: [
-      { key: "⌘Z", label: "Undo" },
-      { key: "⌘⇧Z", label: "Redo" },
+      { key: "⌘Z", label: studioT("Undo") },
+      { key: "⌘⇧Z", label: studioT("Redo") },
       { key: "⌘C", label: "Copy element" },
       { key: "⌘V", label: "Paste element" },
       { key: "⌘X", label: "Cut element" },
@@ -62,7 +63,7 @@ export const DEFAULT_SHORTCUT_SECTIONS: readonly ShortcutSection[] = [
       { key: "[", label: "Select clips starting before the playhead" },
       { key: "]", label: "Select clips running at or after the playhead" },
       { key: "⌘G", label: "Group elements" },
-      { key: "⌘⇧G", label: "Ungroup" },
+      { key: "⌘⇧G", label: studioT("Ungroup") },
       { key: "Del", label: "Delete selected element (no keyframe selected)" },
     ],
   },
@@ -86,7 +87,7 @@ export const DEFAULT_SHORTCUT_SECTIONS: readonly ShortcutSection[] = [
     ],
   },
   {
-    title: "Crop",
+    title: studioT("Crop"),
     hints: [
       { key: "Drag edge", label: "Crop a side" },
       { key: "Drag center", label: "Reposition the crop" },

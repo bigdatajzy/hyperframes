@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
 import { FlatRow, FlatSegmentedRow, FlatSelectRow } from "./propertyPanelFlatPrimitives";
 import { KeyframeNavigation } from "./KeyframeNavigation";
@@ -173,7 +174,7 @@ export function LayoutGeometryRows({
         suffix={<KeyframeGutter property="height" displayValue={displayH} {...gutterProps} />}
       />
       <FlatRow
-        label="Angle"
+        label={studioT("Angle")}
         value={`${displayR}°`}
         tier="default"
         disabled={manualRotationEditingDisabled}

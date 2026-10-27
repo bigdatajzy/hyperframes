@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useRef, useState } from "react";
 import { XIcon, WarningIcon, CheckCircleIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { copyTextToClipboard } from "../utils/clipboard";
@@ -93,7 +94,7 @@ export function LintModal({
           </div>
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={studioT("Close")}
             className="p-1.5 rounded-lg text-neutral-500 hover:text-neutral-200 hover:bg-neutral-800 transition-colors active:scale-[0.98]"
           >
             <XIcon size={16} />

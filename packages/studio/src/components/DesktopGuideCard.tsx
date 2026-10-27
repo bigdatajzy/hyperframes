@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { ArrowSquareOut, Check, Copy } from "@phosphor-icons/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { copyTextToClipboard } from "../utils/clipboard";
@@ -107,7 +108,7 @@ function FolderPath({ dir }: { dir: string }) {
       </span>
       <Button
         variant="secondary"
-        aria-label={copied ? "Copied" : "Copy folder path"}
+        aria-label={copied ? studioT("Copied") : "Copy folder path"}
         className="w-ctl px-0"
         onClick={() => void copyTextToClipboard(dir).then((ok) => ok && setCopied(true))}
       >
@@ -142,7 +143,7 @@ export function labelOf(p: Progress): string {
   if (p.opening) return "Opening in the app…";
   if (p.failed) return "Couldn't open";
   if (p.route.handoff) return "Open in desktop app";
-  return isWaiting(p) ? "Finish installing" : "Install the desktop app";
+  return isWaiting(p) ? studioT("Finish installing") : studioT("Install the desktop app");
 }
 
 function subtitleOf(p: Progress): string {

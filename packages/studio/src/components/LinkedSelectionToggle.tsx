@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 import { LinkSimple } from "@phosphor-icons/react";
@@ -61,7 +62,7 @@ export function LinkedSelectionToggle() {
             e.preventDefault();
             setMenuAt({ x: e.clientX, y: e.clientY });
           }}
-          aria-label="Linked Selection"
+          aria-label={studioT("Linked Selection")}
           aria-pressed={linkedSelection}
           className={linkedSelection ? flatActive : flatIdle}
         >

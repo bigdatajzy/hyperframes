@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useEffect, useRef } from "react";
 import { formatTime } from "../lib/time";
 import { liveTime, usePlayerStore } from "../store/playerStore";
@@ -38,7 +39,7 @@ export const PreviewSeekBar = memo(function PreviewSeekBar({
         step="any"
         defaultValue={0}
         disabled={disabled || duration <= 0}
-        aria-label="Seek preview"
+        aria-label={studioT("Seek preview")}
         onChange={(event) => onSeek(event.currentTarget.valueAsNumber)}
         className="h-6 w-full cursor-pointer accent-neutral-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-ink disabled:cursor-default disabled:opacity-30"
       />

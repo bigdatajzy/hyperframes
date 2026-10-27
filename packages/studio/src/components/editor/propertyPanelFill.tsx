@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { buildProjectApiPath } from "../../utils/projectRouting";
 import { useMemo, useRef, useState } from "react";
 import { Plus, X } from "../../icons/SystemIcons";
@@ -204,7 +205,7 @@ export function ImageFillField({
                 className="min-w-0 w-full appearance-none bg-transparent text-[11px] font-medium text-neutral-100 outline-hidden disabled:cursor-not-allowed disabled:text-neutral-600"
               >
                 <option value="" disabled={isImage}>
-                  None
+                  {studioT("None")}
                 </option>
                 {imageAssets.map((asset) => (
                   <option key={asset} value={asset}>
@@ -350,8 +351,8 @@ export function GradientField({
             value={parsed.kind}
             onChange={(next) => patch({ kind: next as GradientModel["kind"] })}
             options={[
-              { label: "Linear", value: "linear" },
-              { label: "Radial", value: "radial" },
+              { label: studioT("Linear"), value: "linear" },
+              { label: studioT("Radial"), value: "radial" },
               { label: "Conic", value: "conic" },
             ]}
           />
@@ -391,7 +392,9 @@ export function GradientField({
 
       {(parsed.kind === "linear" || parsed.kind === "conic") && (
         <div className="grid gap-1.5">
-          <span className={LABEL}>{parsed.kind === "linear" ? "Angle" : "Start angle"}</span>
+          <span className={LABEL}>
+            {parsed.kind === "linear" ? studioT("Angle") : "Start angle"}
+          </span>
           <SliderControl
             trackName={parsed.kind === "linear" ? "Angle" : "Start angle"}
             value={parsed.angle}
@@ -416,7 +419,7 @@ export function GradientField({
             options={["ellipse", "circle"]}
           />
           <SelectField
-            label="Size"
+            label={studioT("Size")}
             value={parsed.radialSize}
             disabled={disabled}
             onChange={(next) => patch({ radialSize: next as GradientModel["radialSize"] })}

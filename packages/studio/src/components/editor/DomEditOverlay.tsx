@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import type { DomSelectionResult } from "../../hooks/useDomSelectionTypes";
 import type { RotationCommit } from "./rotationDraft";
 import { memo, useEffect, useMemo, useRef, type RefObject } from "react";
@@ -473,7 +474,7 @@ export const DomEditOverlay = memo(function DomEditOverlay({
       }`}
       data-editing-text={inlineText.editing ? "true" : undefined}
       tabIndex={-1}
-      aria-label="Composition canvas"
+      aria-label={studioT("Composition canvas")}
       // Cursor follows marquee rect *state* (re-renders), not the mutable ref.
       style={marquee.marqueeRect ? { cursor: "crosshair" } : undefined}
       onPointerDownCapture={(event) => {

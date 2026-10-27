@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * Right-click context menu for a selected canvas element.
  *
@@ -131,10 +132,10 @@ function ZActionIcon({ action }: { action: ZAction }) {
 }
 
 const Z_ACTIONS: Array<{ action: ZAction; label: string }> = [
-  { action: "bring-to-front", label: "Bring to front" },
+  { action: "bring-to-front", label: studioT("Bring to front") },
   { action: "bring-forward", label: "Bring forward" },
   { action: "send-backward", label: "Send backward" },
-  { action: "send-to-back", label: "Send to back" },
+  { action: "send-to-back", label: studioT("Send to back") },
 ];
 
 export const CanvasContextMenu = memo(function CanvasContextMenu({
@@ -266,7 +267,7 @@ export const CanvasContextMenu = memo(function CanvasContextMenu({
             handleDelete();
           }}
         >
-          <span>Delete</span>
+          <span>{studioT("Delete")}</span>
           <span className="text-neutral-500 text-[10px] ml-3">⌫</span>
         </button>
       )}

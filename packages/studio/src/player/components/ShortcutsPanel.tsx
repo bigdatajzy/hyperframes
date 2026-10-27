@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState, useCallback, useRef, memo } from "react";
 import { formatTime, frameToSeconds } from "../lib/time";
 import { Popover, Tooltip } from "../../components/ui";
@@ -59,7 +60,7 @@ export const ShortcutsPanel = memo(function ShortcutsPanel({
   );
 
   return (
-    <Tooltip label="Shortcuts and tools">
+    <Tooltip label={studioT("Shortcuts and tools")}>
       <Popover
         open={showShortcuts}
         onOpenChange={setShowShortcuts}
@@ -73,7 +74,7 @@ export const ShortcutsPanel = memo(function ShortcutsPanel({
           <button
             type="button"
             className={`${showShortcuts ? flatActive : flatIdle} shrink-0`}
-            aria-label="Shortcuts and tools"
+            aria-label={studioT("Shortcuts and tools")}
           >
             <svg
               width="11"

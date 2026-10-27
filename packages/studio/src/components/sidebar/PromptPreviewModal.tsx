@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useDialogBehavior } from "../ui/useDialogBehavior";
 
@@ -66,7 +67,7 @@ export function PromptPreviewModal({
             <p className="text-xs text-neutral-500 mt-0.5">{title}</p>
           </div>
           <button
-            aria-label="Close"
+            aria-label={studioT("Close")}
             className="p-1 rounded-md text-neutral-500 hover:text-neutral-300 hover:bg-neutral-800/50 active:scale-[0.95]"
             onClick={onClose}
           >

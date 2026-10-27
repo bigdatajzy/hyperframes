@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { buildProjectApiPath } from "../../utils/projectRouting";
 import { memo, useCallback, useState } from "react";
 import { RenderQueueInfo } from "./RenderQueueInfo";
@@ -111,7 +112,7 @@ export const RenderQueueItem = memo(function RenderQueueItem({
                 onCancel();
               }}
             >
-              Cancel
+              {studioT("Cancel")}
             </Button>
           ) : confirmingDelete ? (
             <>
@@ -142,7 +143,9 @@ export const RenderQueueItem = memo(function RenderQueueItem({
               {/* The tooltip explains the control whether or not it is
                   reachable; `disabled:` on the shared Button keeps pointer
                   events alive precisely so a disabled one can still say why. */}
-              <Tooltip label={isComplete ? "Download" : "Available when the render finishes"}>
+              <Tooltip
+                label={isComplete ? studioT("Download") : "Available when the render finishes"}
+              >
                 <IconButton
                   size="sm"
                   onClick={handleDownload}

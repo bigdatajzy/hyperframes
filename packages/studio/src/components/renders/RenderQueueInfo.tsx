@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import type { RenderJob } from "./useRenderQueue";
 
 function formatDuration(ms: number): string {
@@ -27,7 +28,7 @@ export function RenderQueueInfo({ job }: { job: RenderJob }) {
       {isRendering && (
         <div className="mt-1">
           <div className="flex items-center justify-between mb-0.5">
-            <span className="text-step-9 text-text-4">{job.stage || "Rendering"}</span>
+            <span className="text-step-9 text-text-4">{job.stage || studioT("Rendering")}</span>
             <span className="text-step-9 font-mono text-accent-ink">{job.progress}%</span>
           </div>
           <div
@@ -50,7 +51,7 @@ export function RenderQueueInfo({ job }: { job: RenderJob }) {
         <span className="text-step-9 text-danger-ink mt-0.5 block">{job.error}</span>
       )}
       {job.status === "cancelled" && (
-        <span className="text-step-9 text-text-4 mt-0.5 block">Cancelled</span>
+        <span className="text-step-9 text-text-4 mt-0.5 block">{studioT("Cancelled")}</span>
       )}
 
       {!isRendering && (

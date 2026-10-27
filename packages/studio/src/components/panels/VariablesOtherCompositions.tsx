@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * Variables tab section for compositions OTHER than the active one. A variable
  * promoted into a sub-comp lives in that frame's file, not the active session —
@@ -62,7 +63,7 @@ function CompositionSection({
                 />
                 <RowAction
                   label="✕"
-                  title="Remove declaration"
+                  title={studioT("Remove declaration")}
                   danger
                   onClick={() => onRemove(group.path, decl.id)}
                 />
@@ -72,7 +73,7 @@ function CompositionSection({
             {editing && (
               <DeclarationForm
                 initial={draftFromDeclaration(decl)}
-                submitLabel="Save"
+                submitLabel={studioT("Save")}
                 onSubmit={(edited) => onSave(group.path, mergeDeclarationEdit(decl, edited))}
                 onCancel={() => onToggleEdit(null)}
               />

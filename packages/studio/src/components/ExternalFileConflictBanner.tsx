@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useRef, useState } from "react";
 import type {
   ExternalFileChangeBlockedState,
@@ -54,7 +55,7 @@ function ConflictReview({
             </p>
           </div>
           <button type="button" onClick={onClose} className="rounded-sm px-2 py-1 text-neutral-400">
-            Close
+            {studioT("Close")}
           </button>
         </div>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -71,7 +72,7 @@ function ConflictReview({
                     className="rounded-sm border border-neutral-700 px-2 py-1 text-[11px]"
                     onClick={() => void navigator.clipboard.writeText(side.content)}
                   >
-                    Copy
+                    {studioT("Copy")}
                   </button>
                   <button
                     type="button"
@@ -80,7 +81,7 @@ function ConflictReview({
                       downloadText(`${conflict.error.filePath}.${side.suffix}.html`, side.content)
                     }
                   >
-                    Download
+                    {studioT("Download")}
                   </button>
                 </div>
               </div>
@@ -132,7 +133,7 @@ function FailedDraftReview({
             </p>
           </div>
           <button type="button" onClick={onClose} className="rounded-sm px-2 py-1 text-neutral-400">
-            Close
+            {studioT("Close")}
           </button>
         </div>
         <div className="mt-4 flex justify-end gap-2">
@@ -141,14 +142,14 @@ function FailedDraftReview({
             className="rounded-sm border border-neutral-700 px-2 py-1 text-[11px]"
             onClick={() => void navigator.clipboard.writeText(content)}
           >
-            Copy
+            {studioT("Copy")}
           </button>
           <button
             type="button"
             className="rounded-sm border border-neutral-700 px-2 py-1 text-[11px]"
             onClick={() => downloadText(`${path}.studio.html`, content)}
           >
-            Download
+            {studioT("Download")}
           </button>
         </div>
         <textarea

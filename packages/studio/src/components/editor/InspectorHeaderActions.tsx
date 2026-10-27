@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { Eye, EyeSlash } from "@phosphor-icons/react";
 import { X } from "../../icons/SystemIcons";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
@@ -56,7 +57,7 @@ export function InspectorHeaderActions({
           title="Ungroup (⌘⇧G)"
           className="flex h-6 items-center rounded-sm px-2 text-[11px] font-medium text-neutral-400 transition-colors hover:bg-neutral-800 hover:text-neutral-200"
         >
-          Ungroup
+          {studioT("Ungroup")}
         </button>
       )}
       <button

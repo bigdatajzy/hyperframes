@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useRef, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import {
   getHfColorGradingCapabilities,
@@ -242,7 +243,7 @@ function TonalWheel({
       />
       <div className="grid grid-cols-3 gap-1">
         <GradingNumberField
-          label="Hue"
+          label={studioT("Hue")}
           value={wheel.hue}
           min={WHEEL_CONTROLS.hue.min}
           max={HUE_MAX}

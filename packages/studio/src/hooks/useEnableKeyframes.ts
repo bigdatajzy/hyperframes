@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 /**
  * Centralized "Enable keyframes" logic that handles ALL scenarios:
  * - Element has explicit keyframes → add/remove at seeked time
@@ -256,7 +257,7 @@ async function extendKeyframedTweenToPlayhead(
       ...keyframeEases(anim),
     },
     {
-      label: "Add keyframe",
+      label: studioT("Add keyframe"),
       keyframeAction: "add",
       softReload: true,
       ...commitOverrides,
@@ -372,7 +373,7 @@ export async function promoteSetToKeyframes(
       ],
       ease: setAnim.ease,
     },
-    { label: "Add keyframe", keyframeAction: "add", softReload: true },
+    { label: studioT("Add keyframe"), keyframeAction: "add", softReload: true },
   );
 }
 
@@ -412,7 +413,7 @@ export async function applyArcKeyframeAtPlayhead(
         keyframes: extended.keyframes,
         ease: "none",
       },
-      { label: "Add keyframe", keyframeAction: "add", softReload: true },
+      { label: studioT("Add keyframe"), keyframeAction: "add", softReload: true },
     );
     return;
   }
@@ -455,7 +456,7 @@ export async function applyArcKeyframeAtPlayhead(
       }),
       ease: "none",
     },
-    { label: "Add keyframe", keyframeAction: "add", softReload: true },
+    { label: studioT("Add keyframe"), keyframeAction: "add", softReload: true },
   );
 }
 

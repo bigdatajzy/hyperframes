@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
 /**
  * One effect in the FX rack: its header controls, and its knobs when open.
@@ -204,13 +205,13 @@ function FxNodeHeader({
         {bypassed ? "Off" : "On"}
       </button>
       <FxMoveButton
-        label="Move up"
+        label={studioT("Move up")}
         glyph="&uarr;"
         disabled={Boolean(disabled) || first}
         onClick={() => onMove(-1)}
       />
       <FxMoveButton
-        label="Move down"
+        label={studioT("Move down")}
         glyph="&darr;"
         disabled={Boolean(disabled) || last}
         onClick={() => onMove(1)}
@@ -218,7 +219,7 @@ function FxNodeHeader({
       <button
         type="button"
         className="hf-fx-remove px-1 font-mono text-[11px] text-panel-text-2 hover:text-danger-ink disabled:opacity-40"
-        title="Remove"
+        title={studioT("Remove")}
         disabled={disabled}
         onClick={onRemove}
       >

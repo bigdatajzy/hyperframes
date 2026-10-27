@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback, useSyncExternalStore } from "react";
 import { CornersIn, CornersOut, DotsThree, X } from "@phosphor-icons/react";
 import type { IDockviewHeaderActionsProps } from "dockview-react";
@@ -31,8 +32,10 @@ export function DockStripActions({
     <div className="hf-dock-strip-actions">
       <Menu
         align="end"
-        aria-label="Panel menu"
-        trigger={<IconButton size="sm" aria-label="Panel menu" icon={<DotsThree size={16} />} />}
+        aria-label={studioT("Panel menu")}
+        trigger={
+          <IconButton size="sm" aria-label={studioT("Panel menu")} icon={<DotsThree size={16} />} />
+        }
       >
         {menuPanels.map((id) => (
           <MenuCheckboxItem
@@ -44,17 +47,17 @@ export function DockStripActions({
           </MenuCheckboxItem>
         ))}
         <MenuSeparator />
-        <MenuItem onClick={resetLayout}>Reset layout</MenuItem>
+        <MenuItem onClick={resetLayout}>{studioT("Reset layout")}</MenuItem>
       </Menu>
       <IconButton
         size="sm"
-        aria-label={maximized ? "Restore panel" : "Maximize panel"}
+        aria-label={maximized ? studioT("Restore panel") : studioT("Maximize panel")}
         icon={maximized ? <CornersIn size={16} /> : <CornersOut size={16} />}
         onClick={() => (maximized ? api.exitMaximized() : api.maximize())}
       />
       <IconButton
         size="sm"
-        aria-label="Close group"
+        aria-label={studioT("Close group")}
         icon={<X size={16} />}
         onClick={() => api.close()}
       />

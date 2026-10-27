@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import {
   readPreviewCompositionSize,
   type PreviewCompositionSize,
@@ -498,7 +499,7 @@ export const NLEPreview = memo(function NLEPreview({
         ref={viewportRef}
         className="relative flex-1 flex items-center justify-center overflow-hidden min-h-0 outline-hidden focus:ring-1 focus:ring-studio-accent/40 bg-[var(--studio-preview-bg,var(--color-neutral-950))]"
         tabIndex={0}
-        aria-label="Composition preview"
+        aria-label={studioT("Composition preview")}
       >
         <div
           className="absolute flex items-center justify-center pointer-events-none"

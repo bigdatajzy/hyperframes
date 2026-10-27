@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { isClipHiddenByRuntime, PREVIEW_ONLY_ATTRS } from "@hyperframes/core/studio-preview-mark";
 import { knownSourceAnswer, probeSourceElement, type ProbeTarget } from "./probeSourceElement";
 import { isAudibleVideoNode } from "../../player/lib/timelineElementHelpers";
@@ -167,7 +168,7 @@ export function serializeDomEditTextFields(fields: DomEditTextField[]): string {
 export function buildDefaultDomEditTextField(base?: Partial<DomEditTextField>): DomEditTextField {
   return {
     key: `child:new:${Date.now()}`,
-    label: "Text",
+    label: studioT("Text"),
     value: "New text",
     tagName: "span",
     attributes: [],

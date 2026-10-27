@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { ADD_METHODS, ADD_METHOD_LABELS, METHOD_TOOLTIPS } from "./gsapAnimationConstants";
 
 const STYLES = {
@@ -50,7 +51,7 @@ export function GsapAddAnimationControl({
             </button>
           ))}
           <button type="button" onClick={() => setOpen(false)} className={styles.cancel}>
-            Cancel
+            {studioT("Cancel")}
           </button>
         </div>
       ) : (

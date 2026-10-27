@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
 /**
  * The FX section for an audio element: the chain, plus the voiceover carve.
@@ -572,7 +573,7 @@ export function FxSection({
             setAdding(false);
           }}
         >
-          {picking ? "Close" : "Presets"}
+          {picking ? studioT("Close") : "Presets"}
         </button>
         <button
           type="button"
@@ -588,7 +589,7 @@ export function FxSection({
             setPicking(false);
           }}
         >
-          {adding ? "Close" : "+ effect"}
+          {adding ? studioT("Close") : "+ effect"}
         </button>
       </div>
     </div>

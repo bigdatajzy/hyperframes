@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { scopedElementKey } from "../../hooks/gsapKeyframeCacheHelpers";
 import type { GsapAnimation } from "@hyperframes/core/gsap-parser";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
@@ -95,9 +96,9 @@ export function FlatTimingRow({
 
   return (
     <div className={RESPONSIVE_GRID}>
-      {cell("Start", formatTimingValue(start), commitStart)}
-      {cell("End", formatTimingValue(end), commitEnd)}
-      {cell("Duration", formatTimingValue(duration), commitDuration)}
+      {cell(studioT("Start"), formatTimingValue(start), commitStart)}
+      {cell(studioT("End"), formatTimingValue(end), commitEnd)}
+      {cell(studioT("Duration"), formatTimingValue(duration), commitDuration)}
       {derived && (
         <p className="col-span-3 mt-1 text-[10px] leading-snug text-panel-text-3">
           Inferred from this element's animation. Edit to pin an explicit clip range.
@@ -194,12 +195,12 @@ export function motionSectionLabel(args: {
 }): { title: string; summary: string } {
   if (args.timingOnly) {
     return {
-      title: "Timing",
+      title: studioT("Timing"),
       summary: `${formatTimingValue(args.start)} to ${formatTimingValue(args.start + args.duration)}`,
     };
   }
   return {
-    title: "Motion",
+    title: studioT("Motion"),
     summary: `${args.effectCount} effect${args.effectCount === 1 ? "" : "s"}`,
   };
 }

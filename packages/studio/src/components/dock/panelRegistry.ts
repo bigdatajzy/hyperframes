@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import type { Direction } from "dockview-react";
 
 export const PANEL_IDS = [
@@ -29,36 +30,64 @@ export interface PanelDefinition {
 
 export const PANEL_DEFINITIONS = {
   preview: {
-    title: "Preview",
+    title: studioT("Preview"),
     zone: "center",
     reopen: { near: "timeline", direction: "above" },
     keepMounted: true,
   },
   timeline: {
-    title: "Timeline",
+    title: studioT("Timeline"),
     zone: "center",
     reopen: { near: "preview", direction: "below" },
     keepMounted: true,
   },
   compositions: {
-    title: "Compositions",
+    title: studioT("Compositions"),
     zone: "left",
     reopen: { near: "preview", direction: "left" },
   },
-  assets: { title: "Assets", zone: "left", reopen: { near: "compositions", direction: "within" } },
-  code: { title: "Code", zone: "left", reopen: { near: "compositions", direction: "within" } },
-  catalog: {
-    title: "Catalog",
+  assets: {
+    title: studioT("Assets"),
     zone: "left",
     reopen: { near: "compositions", direction: "within" },
   },
-  design: { title: "Design", zone: "right", reopen: { near: "preview", direction: "right" } },
-  layers: { title: "Layers", zone: "right", reopen: { near: "design", direction: "within" } },
-  renders: { title: "Renders", zone: "right", reopen: { near: "design", direction: "within" } },
-  variables: { title: "Variables", zone: "right", reopen: { near: "design", direction: "within" } },
-  slideshow: { title: "Slideshow", zone: "right", reopen: { near: "design", direction: "within" } },
+  code: {
+    title: studioT("Code"),
+    zone: "left",
+    reopen: { near: "compositions", direction: "within" },
+  },
+  catalog: {
+    title: studioT("Catalog"),
+    zone: "left",
+    reopen: { near: "compositions", direction: "within" },
+  },
+  design: {
+    title: studioT("Design"),
+    zone: "right",
+    reopen: { near: "preview", direction: "right" },
+  },
+  layers: {
+    title: studioT("Layers"),
+    zone: "right",
+    reopen: { near: "design", direction: "within" },
+  },
+  renders: {
+    title: studioT("Renders"),
+    zone: "right",
+    reopen: { near: "design", direction: "within" },
+  },
+  variables: {
+    title: studioT("Variables"),
+    zone: "right",
+    reopen: { near: "design", direction: "within" },
+  },
+  slideshow: {
+    title: studioT("Slideshow"),
+    zone: "right",
+    reopen: { near: "design", direction: "within" },
+  },
   motionBlur: {
-    title: "Blur",
+    title: studioT("Blur"),
     zone: "right",
     reopen: { near: "design", direction: "within" },
   },

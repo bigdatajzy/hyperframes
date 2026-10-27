@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useState, useCallback, useMemo, useRef, useEffect } from "react";
 import {
   PencilSimple,
@@ -159,7 +160,8 @@ export function ContextMenu({
         }}
       >
         <PencilSimple size={12} weight="duotone" className="text-neutral-500" />
-        Rename
+
+        {studioT("Rename")}
       </button>
       {!state.targetIsFolder && (
         <button
@@ -171,7 +173,8 @@ export function ContextMenu({
           }}
         >
           <Copy size={12} weight="duotone" className="text-neutral-500" />
-          Duplicate
+
+          {studioT("Duplicate")}
         </button>
       )}
       <div className={menuClasses.divider} />
@@ -184,7 +187,8 @@ export function ContextMenu({
         }}
       >
         <Trash size={12} weight="duotone" />
-        Delete
+
+        {studioT("Delete")}
       </button>
     </div>
   );
@@ -341,7 +345,7 @@ export function DeleteConfirm({
           </>
         ) : (
           <>
-            Delete <span className="font-medium text-neutral-100">{name}</span>?
+            {studioT("Delete")} <span className="font-medium text-neutral-100">{name}</span>?
           </>
         )}
       </p>
@@ -350,13 +354,13 @@ export function DeleteConfirm({
           onClick={onCancel}
           className="flex-1 px-2 py-1 rounded-sm bg-hover text-neutral-300 hover:bg-press transition-colors"
         >
-          Cancel
+          {studioT("Cancel")}
         </button>
         <button
           onClick={onConfirm}
           className="flex-1 px-2 py-1 rounded-sm bg-danger/15 text-danger-ink hover:bg-danger/25 transition-colors"
         >
-          Delete
+          {studioT("Delete")}
         </button>
       </div>
     </div>

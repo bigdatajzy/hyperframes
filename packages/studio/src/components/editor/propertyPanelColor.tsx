@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "../../icons/SystemIcons";
@@ -337,7 +338,9 @@ export function ColorField({
           <div className="flex items-center justify-between border-b border-neutral-800 px-3 py-2">
             <div className="min-w-0">
               <div className="truncate text-[11px] font-medium text-neutral-100">{label}</div>
-              <div className="text-[9px] uppercase tracking-[0.16em] text-neutral-600">Color</div>
+              <div className="text-[9px] uppercase tracking-[0.16em] text-neutral-600">
+                {studioT("Color")}
+              </div>
             </div>
             <button
               type="button"
@@ -403,7 +406,7 @@ export function ColorField({
             </div>
 
             <ColorSlider
-              label="Hue"
+              label={studioT("Hue")}
               value={hsv.hue}
               min={0}
               max={360}
@@ -506,7 +509,7 @@ export function ColorField({
             onClick={onReset}
             className="rounded-sm bg-panel-hover px-1.5 py-0.5 text-[9px] font-medium text-panel-text-4 transition-colors hover:text-panel-text-0 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Reset
+            {studioT("Reset")}
           </button>
         )}
       </div>

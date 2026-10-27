@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import type { ReactNode } from "react";
 import { ArrowLineLeft, ArrowLineRight, CaretDown } from "@phosphor-icons/react";
 import { usePlayerStore } from "../player";
@@ -28,14 +29,14 @@ export function TimelineToolPicker({ showSelectAroundPlayhead = true }) {
   const store = () => usePlayerStore.getState();
   const rows: ToolRow[] = [
     {
-      label: "Select",
+      label: studioT("Select"),
       shortcut: "V",
       icon: <SelectIcon />,
       active: activeTool === "select",
       run: () => store().setActiveTool("select"),
     },
     {
-      label: "Split",
+      label: studioT("Split"),
       shortcut: "B",
       icon: <Scissors size={16} />,
       active: activeTool === "razor",

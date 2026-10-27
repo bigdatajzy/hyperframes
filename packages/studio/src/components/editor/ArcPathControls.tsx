@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback } from "react";
 import type { ArcPathConfig, ArcPathSegment } from "@hyperframes/core/gsap-parser";
 import { SliderControl } from "./propertyPanelPrimitives";
@@ -114,7 +115,7 @@ export const ArcPathControls = memo(function ArcPathControls({
                     className="text-[9px] font-medium text-neutral-500 transition-colors hover:text-neutral-300"
                     title="Reset to auto-generated control points"
                   >
-                    Reset
+                    {studioT("Reset")}
                   </button>
                 )}
               </div>

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * The maths behind an automation lane: which parameters it can offer, how a
  * value maps to a position in the lane, and how a lane is edited.
@@ -74,7 +75,7 @@ export interface AutomationTargetOption {
  */
 export function automationTargets(chain: HfAudioFxChain | null): AutomationTargetOption[] {
   const out: AutomationTargetOption[] = [
-    { target: VOLUME_TARGET, label: "Volume", range: VOLUME_RANGE },
+    { target: VOLUME_TARGET, label: studioT("Volume"), range: VOLUME_RANGE },
   ];
   for (const node of chain?.nodes ?? []) {
     out.push(...nodeTargets(node, chain));

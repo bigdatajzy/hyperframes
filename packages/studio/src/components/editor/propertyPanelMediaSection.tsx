@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useState } from "react";
 import { isVideoAudible } from "../../player/lib/timelineElementHelpers";
 import { Check, ClipboardList, Film, Music, Scissors } from "../../icons/SystemIcons";
@@ -144,7 +145,7 @@ export function MediaSection({
         {srcAttr && (
           <div className="min-w-0">
             <div className="flex items-center justify-between gap-2">
-              <div className="text-[11px] font-medium text-neutral-500">Source</div>
+              <div className="text-[11px] font-medium text-neutral-500">{studioT("Source")}</div>
               <button
                 type="button"
                 onClick={() => {
@@ -156,7 +157,7 @@ export function MediaSection({
                 className="flex h-6 items-center gap-1 rounded-lg border border-neutral-700 bg-neutral-950 px-2 text-[10px] font-medium text-neutral-400 transition-colors hover:border-neutral-600 hover:text-neutral-200"
               >
                 {copied ? <Check size={11} /> : <ClipboardList size={11} />}
-                <span>{copied ? "Copied" : "Copy"}</span>
+                <span>{copied ? studioT("Copied") : studioT("Copy")}</span>
               </button>
             </div>
             <div
@@ -198,7 +199,7 @@ export function MediaSection({
 
             <div className="grid grid-cols-2 gap-2">
               <SelectField
-                label="Quality"
+                label={studioT("Quality")}
                 value={quality}
                 onChange={(next) => setQuality(next as typeof quality)}
                 options={["fast", "balanced", "best"]}
@@ -257,9 +258,9 @@ export function MediaSection({
         {(isVideo || isAudio) && (
           <>
             <div className="grid min-w-0 gap-1.5">
-              <span className={LABEL}>Volume</span>
+              <span className={LABEL}>{studioT("Volume")}</span>
               <SliderControl
-                trackName="Volume"
+                trackName={studioT("Volume")}
                 value={volumeFaderPosition}
                 min={AUDIO_GAIN_FADER_MIN}
                 max={AUDIO_GAIN_FADER_MAX}
@@ -306,9 +307,9 @@ export function MediaSection({
 
             <div className={RESPONSIVE_GRID}>
               <div className="grid min-w-0 gap-1.5">
-                <span className={LABEL}>Loop</span>
+                <span className={LABEL}>{studioT("Loop")}</span>
                 <SegmentedControl
-                  trackName="Loop"
+                  trackName={studioT("Loop")}
                   value={hasLoop ? "on" : "off"}
                   onChange={(next) => {
                     void onSetHtmlAttribute("loop", next === "on" ? "true" : null);
@@ -354,7 +355,7 @@ export function MediaSection({
           <>
             <div className={RESPONSIVE_GRID}>
               <SelectField
-                label="Fit"
+                label={studioT("Fit")}
                 value={objectFit}
                 onChange={(next) => {
                   void onSetStyle("object-fit", next);
@@ -362,7 +363,7 @@ export function MediaSection({
                 options={["contain", "cover", "fill", "none", "scale-down"]}
               />
               <SelectField
-                label="Position"
+                label={studioT("Position")}
                 value={objectPosition}
                 onChange={(next) => {
                   void onSetStyle("object-position", next);

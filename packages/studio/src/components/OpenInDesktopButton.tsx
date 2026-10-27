@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useStudioShellContext } from "../contexts/StudioContext";
 import { useFileManagerContextOptional } from "../contexts/FileManagerContext";
@@ -306,7 +307,7 @@ export function OpenInDesktopButton() {
           title={
             progress.route.handoff
               ? "Open this project in the HyperFrames desktop app"
-              : "Get the free HyperFrames desktop app"
+              : studioT("Get the free HyperFrames desktop app")
           }
           className={cn(LOOK, progress.failed && LOOK_FAILED)}
           icon={

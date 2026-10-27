@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { memo, useCallback, type ReactNode } from "react";
 import { PreviewPane } from "./nle/PreviewPane";
 import { TimelinePane } from "./nle/TimelinePane";
@@ -341,7 +342,7 @@ function EditorShellBody({
                 <div className="border-t border-neutral-800/30 shrink-0" style={{ height: 60 }}>
                   <div className="flex items-center gap-1.5 px-2 py-0.5">
                     <span className="text-[9px] font-medium text-neutral-500 uppercase tracking-wider">
-                      Captions
+                      {studioT("Captions")}
                     </span>
                   </div>
                   <CaptionTimeline pixelsPerSecond={100} onSeek={seekCaptionTime} />

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { buildProjectApiPath } from "../../utils/projectRouting";
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useThumbnailLease } from "../../hooks/useThumbnailLease";
@@ -380,8 +381,8 @@ function CompCard({
           <span className="text-[11px] font-medium text-neutral-300 truncate">{name}</span>
           {isRoot && (
             <span
-              aria-label="Root composition: opens automatically on load"
-              title="Root composition: opens automatically on load"
+              aria-label={studioT("Root composition: opens automatically on load")}
+              title={studioT("Root composition: opens automatically on load")}
               className="flex-shrink-0 rounded-full bg-neutral-700/60 px-1.5 py-px text-[8px] font-bold uppercase tracking-wide text-neutral-300"
             >
               Root
@@ -413,10 +414,12 @@ function CompCard({
         </button>
       )}
       {onRender && (
-        <Tooltip label={isRendering ? "A render is already in progress" : `Render ${name}`}>
+        <Tooltip
+          label={isRendering ? studioT("A render is already in progress") : `Render ${name}`}
+        >
           <button
             type="button"
-            aria-label={isRendering ? "A render is already in progress" : `Render ${name}`}
+            aria-label={isRendering ? studioT("A render is already in progress") : `Render ${name}`}
             disabled={isRendering}
             onClick={(e) => {
               e.stopPropagation();

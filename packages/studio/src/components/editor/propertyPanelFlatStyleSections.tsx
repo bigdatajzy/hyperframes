@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 // fallow-ignore-file code-duplication
 import { useEffect, useState } from "react";
 import { isTextEditableSelection, type DomEditSelection } from "./domEditing";
@@ -89,30 +90,40 @@ function FlatFillFields({
   return (
     <>
       <FlatSegmentedRow
-        label="Fill"
+        label={studioT("Fill")}
         options={[
-          { key: "Solid", node: "Solid", label: "Solid", active: preferredFillMode === "Solid" },
+          {
+            key: "Solid",
+            node: "Solid",
+            label: studioT("Solid"),
+            active: preferredFillMode === "Solid",
+          },
           {
             key: "Gradient",
             node: "Gradient",
-            label: "Gradient",
+            label: studioT("Gradient"),
             active: preferredFillMode === "Gradient",
           },
-          { key: "Image", node: "Image", label: "Image", active: preferredFillMode === "Image" },
+          {
+            key: "Image",
+            node: "Image",
+            label: studioT("Image"),
+            active: preferredFillMode === "Image",
+          },
         ]}
         disabled={styleEditingDisabled}
         onChange={handleFillModeChange}
       />
-      {preferredFillMode === "Solid" ? (
+      {preferredFillMode === studioT("Solid") ? (
         <ColorField
           flat
-          label="Color"
+          label={studioT("Color")}
           value={styles["background-color"] ?? "transparent"}
           disabled={styleEditingDisabled}
           onPreview={(next) => onPreviewStyle?.("background-color", next)}
           onCommit={(next) => onSetStyle("background-color", next)}
         />
-      ) : preferredFillMode === "Gradient" ? (
+      ) : preferredFillMode === studioT("Gradient") ? (
         <GradientField
           value={
             backgroundImage !== "none"
@@ -297,7 +308,7 @@ function FlatShadowBlendRows({
   return (
     <>
       <FlatSelectRow
-        label="Shadow"
+        label={studioT("Shadow")}
         value={boxShadowPreset}
         options={["none", "soft", "lift", "glow", "custom"]}
         tier={resolveValueTier(boxShadowPreset === "none" ? undefined : boxShadowPreset, "none")}
@@ -390,7 +401,7 @@ function FlatOverflowMaskRows({
   return (
     <>
       <FlatSelectRow
-        label="Overflow"
+        label={studioT("Overflow")}
         value={styles.overflow || "visible"}
         options={["visible", "hidden", "clip", "auto", "scroll"]}
         tier={resolveValueTier(styles.overflow, "visible")}
@@ -441,7 +452,7 @@ function FlatOpacitySlider({
 
   return (
     <FlatSlider
-      label="Opacity"
+      label={studioT("Opacity")}
       value={opacityValue}
       min={0}
       max={100}

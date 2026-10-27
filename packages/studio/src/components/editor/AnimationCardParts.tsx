@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { MetricField } from "./propertyPanelPrimitives";
 import {
   PERCENT_PROPS,
@@ -12,15 +13,15 @@ import { P } from "./panelTokens";
 export const BOOLEAN_PROPS = new Set(["visibility"]);
 const STRING_PROPS = new Set(["filter", "clipPath"]);
 const FILTER_PRESETS = [
-  { label: "Blur", value: "blur(4px)" },
+  { label: studioT("Blur"), value: "blur(4px)" },
   { label: "Bright", value: "brightness(1.5)" },
   { label: "Gray", value: "grayscale(1)" },
-  { label: "None", value: "none" },
+  { label: studioT("None"), value: "none" },
 ];
 const CLIP_PATH_PRESETS = [
   { label: "Circle", value: "circle(50% at 50% 50%)" },
   { label: "Inset", value: "inset(10%)" },
-  { label: "None", value: "none" },
+  { label: studioT("None"), value: "none" },
 ];
 
 function isPercentProp(prop: string): boolean {

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { TRACK_H } from "./timelineLayout";
 import { TrackClipCount } from "./TrackClipCount";
 
@@ -33,8 +34,8 @@ export function LaneToggleButton({
       tabIndex={-1}
       aria-expanded={isExpanded}
       aria-controls={lanesId}
-      aria-label={`${isExpanded ? "Hide" : "Show"} ${name} lanes`}
-      title={`${isExpanded ? "Hide" : "Show"} lanes`}
+      aria-label={`${isExpanded ? studioT("Hide") : studioT("Show")} ${name} lanes`}
+      title={`${isExpanded ? studioT("Hide") : studioT("Show")} lanes`}
       // h-6 w-6 = the 24x24 WCAG 2.2 minimum target. The glyph stays 11px;
       // only the hit box grows.
       className={`ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded border-0 bg-transparent p-0 text-[11px] leading-none focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-[var(--timeline-accent)] ${

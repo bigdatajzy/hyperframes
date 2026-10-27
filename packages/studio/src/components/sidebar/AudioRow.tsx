@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { classifyWebAudioMediaRoute } from "@hyperframes/core/runtime/web-audio-route";
 import { ContextMenu } from "./AssetContextMenu";
@@ -286,7 +287,7 @@ export function AudioRow({
                     : "text-accent-ink bg-panel-accent/10"
                 }`}
               >
-                {copyFailed ? "Copy failed" : "Copied"}
+                {copyFailed ? "Copy failed" : studioT("Copied")}
               </span>
             )}
           </div>

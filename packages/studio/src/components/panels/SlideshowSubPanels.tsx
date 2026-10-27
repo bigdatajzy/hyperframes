@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 /**
  * SlideshowSubPanels — internal sub-surface components for SlideshowPanel.
  * Not exported from the package index; used only by SlideshowPanel.tsx.
@@ -96,7 +97,7 @@ export function SlideList({
                 <button
                   type="button"
                   aria-label="Move slide up"
-                  title="Move up"
+                  title={studioT("Move up")}
                   disabled={slideIndex <= 0}
                   className="px-1 py-0.5 text-[10px] text-neutral-400 enabled:hover:text-text-0 enabled:active:scale-[0.95] disabled:opacity-30 disabled:cursor-not-allowed"
                   onClick={(e) => {
@@ -109,7 +110,7 @@ export function SlideList({
                 <button
                   type="button"
                   aria-label="Move slide down"
-                  title="Move down"
+                  title={studioT("Move down")}
                   disabled={slideIndex === slides.length - 1}
                   className="px-1 py-0.5 text-[10px] text-neutral-400 enabled:hover:text-text-0 enabled:active:scale-[0.95] disabled:opacity-30 disabled:cursor-not-allowed"
                   onClick={(e) => {
@@ -261,7 +262,7 @@ export function BranchTree({
           className="px-2 py-1 rounded-sm bg-hover hover:bg-press text-[11px] text-neutral-200 transition-colors shrink-0"
           onClick={handleCreate}
         >
-          Add
+          {studioT("Add")}
         </button>
       </div>
 
@@ -379,14 +380,14 @@ function BranchItem({
               }}
               className="px-2 py-0.5 text-[10px] rounded-sm bg-danger text-on-danger hover:brightness-95 active:brightness-90 transition-colors"
             >
-              Delete
+              {studioT("Delete")}
             </button>
             <button
               type="button"
               onClick={() => setConfirmingDelete(false)}
               className="px-2 py-0.5 text-[10px] rounded-sm text-neutral-400 hover:text-neutral-200 transition-colors"
             >
-              Cancel
+              {studioT("Cancel")}
             </button>
           </div>
         </div>

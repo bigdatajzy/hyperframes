@@ -1,3 +1,4 @@
+import { t as studioT } from "../i18n/locale";
 import { memo, useEffect, useRef, type ReactNode } from "react";
 import {
   ArrowsOutLineHorizontal,
@@ -237,7 +238,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
             <button
               type="button"
               onClick={() => setTimelineSnapEnabled(!timelineSnapEnabled)}
-              aria-label="Toggle timeline snapping"
+              aria-label={studioT("Toggle timeline snapping")}
               aria-pressed={timelineSnapEnabled}
               className={timelineSnapEnabled ? flatActive : flatIdle}
             >
@@ -254,7 +255,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
             <button
               type="button"
               onClick={() => setRippleEditEnabled(!rippleEditEnabled)}
-              aria-label="Toggle ripple edit"
+              aria-label={studioT("Toggle ripple edit")}
               aria-pressed={rippleEditEnabled}
               className={rippleEditEnabled ? flatActive : flatIdle}
             >
@@ -314,7 +315,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
                             : "Add motion path waypoint"
                         : keyframeState === "active"
                           ? "Remove keyframe at playhead"
-                          : "Add keyframe at playhead"
+                          : studioT("Add keyframe at playhead")
                   }
                   className={
                     !onToggleKeyframe
@@ -352,7 +353,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
                 <button
                   type="button"
                   onClick={() => setAutoKeyframeEnabled(!autoKeyframeEnabled)}
-                  aria-label="Auto-record manual edits as keyframes"
+                  aria-label={studioT("Auto-record manual edits as keyframes")}
                   aria-pressed={autoKeyframeEnabled}
                   className={`${flatBtn} active:scale-[0.98] hover:bg-hover ${
                     autoKeyframeEnabled
@@ -402,7 +403,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
                   <button
                     type="button"
                     disabled={!canSplit}
-                    aria-label="Split at playhead"
+                    aria-label={studioT("Split at playhead")}
                     onClick={() => {
                       if (canSplit && el) onSplitElement(el, currentTime);
                     }}
@@ -441,14 +442,14 @@ export const TimelineToolbar = memo(function TimelineToolbar({
                   !beatAnalysisReady
                     ? "Add a music track with beat analysis to place beats"
                     : canAdd
-                      ? "Add beat at playhead"
+                      ? studioT("Add beat at playhead")
                       : "A beat already exists at the playhead"
                 }
               >
                 <button
                   type="button"
                   disabled={!canAdd}
-                  aria-label="Add beat at playhead"
+                  aria-label={studioT("Add beat at playhead")}
                   onClick={() => {
                     if (canAdd) addBeatAtCompositionTime(currentTime);
                   }}
@@ -477,7 +478,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
           <Tooltip
             label={
               thumbnailsVisible
-                ? "Hide thumbnails: labels only"
+                ? studioT("Hide thumbnails: labels only")
                 : "Show thumbnails: posters stay visible; richer previews appear on interaction"
             }
           >
@@ -485,7 +486,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
               type="button"
               aria-label={
                 thumbnailsVisible
-                  ? "Hide thumbnails: labels only"
+                  ? studioT("Hide thumbnails: labels only")
                   : "Show thumbnails: posters stay visible; richer previews appear on interaction"
               }
               aria-pressed={thumbnailsVisible}
@@ -503,14 +504,16 @@ export const TimelineToolbar = memo(function TimelineToolbar({
             label={
               canZoomSelection
                 ? `Zoom to selected clips (${ZOOM_SELECTION_SHORTCUT_HINT})`
-                : "Select a clip to zoom the timeline"
+                : studioT("Select a clip to zoom the timeline")
             }
           >
             <button
               type="button"
               disabled={!canZoomSelection}
               aria-label={
-                canZoomSelection ? "Zoom to selected clips" : "Select a clip to zoom the timeline"
+                canZoomSelection
+                  ? "Zoom to selected clips"
+                  : studioT("Select a clip to zoom the timeline")
               }
               onClick={() => zoomTimelineToSelectedClips()}
               className={canZoomSelection ? flatIdle : flatDisabled}
@@ -518,11 +521,11 @@ export const TimelineToolbar = memo(function TimelineToolbar({
               <FrameCorners size={16} aria-hidden="true" />
             </button>
           </Tooltip>
-          <Tooltip label="Fit timeline to width">
+          <Tooltip label={studioT("Fit timeline to width")}>
             <button
               type="button"
               onClick={() => setZoomMode("fit")}
-              aria-label="Fit timeline to width"
+              aria-label={studioT("Fit timeline to width")}
               aria-pressed={zoomMode === "fit"}
               className={`h-7 px-2 rounded-md text-[11px] font-medium transition-colors ${
                 zoomMode === "fit"
@@ -533,10 +536,10 @@ export const TimelineToolbar = memo(function TimelineToolbar({
               <ArrowsOutLineHorizontal size={16} aria-hidden="true" />
             </button>
           </Tooltip>
-          <Tooltip label="Zoom out">
+          <Tooltip label={studioT("Zoom out")}>
             <button
               type="button"
-              aria-label="Zoom out"
+              aria-label={studioT("Zoom out")}
               onClick={() => zoomTimelineStep("out")}
               className={flatIdle}
             >
@@ -549,7 +552,7 @@ export const TimelineToolbar = memo(function TimelineToolbar({
             max="100"
             value={timelineZoomPercentToSlider(displayedTimelineZoomPercent, timelineFitPps)}
             title={`${displayedTimelineZoomPercent}%`}
-            aria-label="Timeline zoom"
+            aria-label={studioT("Timeline zoom")}
             onChange={(e) =>
               setManualZoomPercent(
                 timelineSliderToZoomPercent(Number(e.target.value), timelineFitPps),
@@ -559,10 +562,10 @@ export const TimelineToolbar = memo(function TimelineToolbar({
             // track stays 2px and the thumb 10px, only the pointer box grows.
             className="mx-1 h-6 w-[96px] cursor-pointer appearance-none bg-transparent [&::-webkit-slider-runnable-track]:h-[2px] [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-neutral-700 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[10px] [&::-webkit-slider-thumb]:h-[10px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-text-0 [&::-webkit-slider-thumb]:-mt-1 [&::-webkit-slider-thumb]:shadow-[0_0_0_2px_#0a0a0a,0_1px_3px_rgba(0,0,0,0.5)] [&::-webkit-slider-thumb]:cursor-grab [&::-webkit-slider-thumb:active]:cursor-grabbing"
           />
-          <Tooltip label="Zoom in">
+          <Tooltip label={studioT("Zoom in")}>
             <button
               type="button"
-              aria-label="Zoom in"
+              aria-label={studioT("Zoom in")}
               onClick={() => zoomTimelineStep("in")}
               className={flatIdle}
             >
@@ -572,9 +575,9 @@ export const TimelineToolbar = memo(function TimelineToolbar({
           {/* Numeric zoom readout (main-parity): "Fit" in fit mode, N% in manual. */}
           <span
             className="ml-1 w-[38px] text-right font-mono text-[11px] tabular-nums text-neutral-500 select-none"
-            aria-label="Timeline zoom level"
+            aria-label={studioT("Timeline zoom level")}
           >
-            {showsFit ? "Fit" : `${displayedTimelineZoomPercent}%`}
+            {showsFit ? studioT("Fit") : `${displayedTimelineZoomPercent}%`}
           </span>
         </div>
       </div>

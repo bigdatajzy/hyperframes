@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import type {
   Composition,
@@ -115,14 +116,14 @@ function VariableRow({
             />
           )}
           <RowAction label="Edit" title="Edit declaration" onClick={onToggleEdit} />
-          <RowAction label="✕" title="Remove declaration" danger onClick={onRemove} />
+          <RowAction label="✕" title={studioT("Remove declaration")} danger onClick={onRemove} />
         </span>
       </div>
       {decl.description && <p className="text-[9px] text-neutral-500">{decl.description}</p>}
       {editing ? (
         <DeclarationForm
           initial={draftFromDeclaration(decl)}
-          submitLabel="Save"
+          submitLabel={studioT("Save")}
           onSubmit={(edited) => onSaveEdit(mergeDeclarationEdit(decl, edited))}
           onCancel={onToggleEdit}
         />
@@ -172,7 +173,7 @@ function PreviewModeHeader({
   return (
     <div className="flex items-center justify-between border-b border-neutral-800 px-3 py-2">
       <div className="flex items-center gap-2">
-        <span className="text-[11px] font-semibold text-neutral-200">Variables</span>
+        <span className="text-[11px] font-semibold text-neutral-200">{studioT("Variables")}</span>
         <span
           className={`rounded-full px-2 py-0.5 text-[9px] font-medium ${
             hasOverrides ? "bg-studio-accent/20 text-accent-ink" : "bg-neutral-800 text-neutral-500"
@@ -187,7 +188,7 @@ function PreviewModeHeader({
           onClick={onReset}
           className="h-6 rounded-sm px-2 text-[10px] text-neutral-400 hover:text-neutral-200"
         >
-          Reset
+          {studioT("Reset")}
         </button>
       )}
     </div>
@@ -521,7 +522,7 @@ export const VariablesPanel = memo(function VariablesPanel({
         {addOpen ? (
           <DeclarationForm
             initial={EMPTY_DRAFT}
-            submitLabel="Add variable"
+            submitLabel={studioT("Add variable")}
             onSubmit={handleAdd}
             onCancel={() => setAddOpen(false)}
           />

@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useEffect, useState } from "react";
 import { isVideoAudible } from "../../player/lib/timelineElementHelpers";
 import { useTrackDesignInput } from "../../contexts/DesignPanelInputContext";
@@ -183,7 +184,7 @@ export function FlatMediaSection({
           className="flex shrink-0 items-center gap-1 text-[10px] text-panel-text-3 hover:text-panel-text-1"
         >
           {copied ? <Check size={11} /> : <ClipboardList size={11} />}
-          {copied ? "Copied" : "Copy"}
+          {copied ? studioT("Copied") : studioT("Copy")}
         </button>
       </div>
       {isVisualMedia && (
@@ -211,7 +212,7 @@ export function FlatMediaSection({
             </button>
           </div>
           <FlatSelectRow
-            label="Quality"
+            label={studioT("Quality")}
             value={quality}
             options={["fast", "balanced", "best"]}
             tier="explicitDefault"
@@ -267,7 +268,7 @@ export function FlatMediaSection({
           >
             <div className="min-w-0 flex-1">
               <FlatSlider
-                label="Volume"
+                label={studioT("Volume")}
                 value={audioGainToFaderPosition(volume)}
                 min={AUDIO_GAIN_FADER_MIN}
                 max={AUDIO_GAIN_FADER_MAX}
@@ -285,7 +286,7 @@ export function FlatMediaSection({
             </div>
             <AutomationToggle
               paramKey="volume"
-              label="Volume"
+              label={studioT("Volume")}
               automated={Boolean(volumeAutomated)}
               onAutomate={onAutomateVolume ? () => onAutomateVolume() : undefined}
               onRemoveAutomation={
@@ -296,7 +297,7 @@ export function FlatMediaSection({
           <div className="flex items-center gap-1">
             <div className="min-w-0 flex-1">
               <FlatSlider
-                label="Speed"
+                label={studioT("Speed")}
                 value={Math.round(toUnit(RATE_RANGE, playbackRate) * 1000)}
                 min={0}
                 max={1000}
@@ -321,7 +322,7 @@ export function FlatMediaSection({
             </div>
             <AutomationToggle
               paramKey="rate"
-              label="Speed"
+              label={studioT("Speed")}
               automated={Boolean(rate?.automated)}
               onAutomate={rate ? () => rate.onAutomate() : undefined}
               onRemoveAutomation={rate ? () => rate.onRemoveAutomation() : undefined}
@@ -363,7 +364,7 @@ export function FlatMediaSection({
             />
           )}
           <FlatToggle
-            label="Loop"
+            label={studioT("Loop")}
             checked={hasLoop}
             onChange={(next) => void onSetHtmlAttribute("loop", next ? "true" : null)}
           />
@@ -384,14 +385,14 @@ export function FlatMediaSection({
       {isVisualMedia && (
         <>
           <FlatSelectRow
-            label="Fit"
+            label={studioT("Fit")}
             value={objectFit}
             options={["contain", "cover", "fill", "none", "scale-down"]}
             tier={objectFit === "contain" ? "default" : "explicitCustom"}
             onChange={(next) => void onSetStyle("object-fit", next)}
           />
           <FlatSelectRow
-            label="Position"
+            label={studioT("Position")}
             value={objectPosition}
             options={[
               "center",

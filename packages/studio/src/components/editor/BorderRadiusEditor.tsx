@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback, useState } from "react";
 import { MetricField } from "./propertyPanelPrimitives";
 import { formatNumericValue, parseNumericValue, RESPONSIVE_GRID } from "./propertyPanelHelpers";
@@ -118,7 +119,7 @@ export function BorderRadiusEditor({
 
       {linked ? (
         <MetricField
-          label="All"
+          label={studioT("All")}
           value={formatNumericValue(tl)}
           disabled={disabled}
           liveCommit

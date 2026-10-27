@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { useCallback, useSyncExternalStore } from "react";
 import {
   Aperture,
@@ -50,7 +51,7 @@ export function DockTab({ api }: IDockviewPanelHeaderProps) {
   return (
     <div className="hf-dock-tab">
       {TypeIcon ? <TypeIcon className="hf-dock-tab-icon" size={14} aria-hidden /> : null}
-      <span className="hf-dock-tab-label">{title}</span>
+      <span className="hf-dock-tab-label">{isPanelId(api.id) ? studioT(title) : title}</span>
       {/* Same shape as dockview's own close control: a tab cannot hold a focusable button. */}
       <div
         role="button"

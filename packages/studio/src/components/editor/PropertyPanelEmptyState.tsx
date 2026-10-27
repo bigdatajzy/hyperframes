@@ -1,3 +1,4 @@
+import { t as studioT } from "../../i18n/locale";
 import { Eye, Layers } from "../../icons/SystemIcons";
 import type { DomEditSelection } from "./domEditingTypes";
 import { canHideSelections } from "../../utils/timelineInspector";
@@ -18,15 +19,18 @@ function FlatEmptyState() {
           <path d="M4 3l6 14 2-6 6-2z" strokeLinejoin="round" />
         </svg>
       </span>
-      <div className="text-[13px] font-semibold text-panel-text-0">Nothing selected</div>
+      <div className="text-[13px] font-semibold text-panel-text-0">
+        {studioT("Nothing selected")}
+      </div>
       <div className="max-w-[250px] text-[11px] leading-normal text-panel-text-3">
-        Click any element on the canvas to edit it, or drag to select several.
+        {studioT("Click any element on the canvas to edit it, or drag to select several.")}
       </div>
       <div className="mt-2 flex w-full flex-col gap-1.5">
         <span className="flex items-center justify-between rounded-lg border border-panel-border bg-panel-bg px-3 py-2">
           <span className="flex items-center gap-2 text-[11px] text-panel-text-2">
             <span className="text-danger-ink">●</span>
-            Record a gesture
+
+            {studioT("Record a gesture")}
           </span>
           <span className="rounded-sm border border-panel-border-input px-[5px] py-px font-mono text-[9px] text-panel-text-5">
             R
@@ -35,7 +39,8 @@ function FlatEmptyState() {
         <span className="flex items-center justify-between rounded-lg border border-panel-border bg-panel-bg px-3 py-2">
           <span className="flex items-center gap-2 text-[11px] text-panel-text-2">
             <span className="text-accent-ink">✦</span>
-            Describe a change to the agent
+
+            {studioT("Describe a change to the agent")}
           </span>
           <span className="rounded-sm border border-panel-border-input px-[5px] py-px font-mono text-[9px] text-panel-text-5">
             ⌘K
